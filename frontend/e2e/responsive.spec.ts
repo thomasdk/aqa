@@ -111,11 +111,11 @@ for (const language of languages) {
 const blockedStartCopy = {
   de: {
     missing: "Fülle alle erforderlichen Felder aus, bevor du startest.",
-    overflow: "Kürze die Eingabe, bevor du startest.",
+    overflow: "Die Eingabe ist zu lang. Kürze das Material oder den Auftrag.",
   },
   en: {
     missing: "Complete all required fields before starting.",
-    overflow: "Shorten the input before starting.",
+    overflow: "Input is too long. Shorten the material or task.",
   },
 } as const;
 

@@ -104,7 +104,9 @@ describe("PromptPreview", () => {
       round.value = "continuation";
       round.dispatchEvent(new Event("change", { bubbles: true }));
     });
-    expect(container.textContent).toContain("This later-round example includes a synthetic researcher note");
+    expect(container.textContent).toContain(
+      "This later-round example includes a synthetic researcher note",
+    );
     expect(container.textContent).toContain("In real discussions, the reminder appears only");
 
     expect(answerMode.disabled).toBe(true);

@@ -171,15 +171,27 @@ type SelectionRecord = NonNullable<LocalAIDiagnostics["runtime_selection_diagnos
 
 function runtimeProfileName(profile: string): string {
   // The diagnostics API validates recorded profiles against the runtime catalog.
-  const match = /^(macos|windows|linux)-(arm64|x86_64)-(metal|cpu|cuda|rocm|vulkan|sycl|opencl)$/.exec(profile);
+  const match =
+    /^(macos|windows|linux)-(arm64|x86_64)-(metal|cpu|cuda|rocm|vulkan|sycl|opencl)$/.exec(profile);
   if (!match) return profile;
   const [, platform, architecture, accelerator] = match;
-  const runtime = ({ metal: "Metal", cpu: "CPU", cuda: "CUDA", rocm: "ROCm", vulkan: "Vulkan", sycl: "SYCL", opencl: "OpenCL" })[accelerator];
-  const os = ({ macos: "macOS", windows: "Windows", linux: "Linux" })[platform];
+  const runtime = {
+    metal: "Metal",
+    cpu: "CPU",
+    cuda: "CUDA",
+    rocm: "ROCm",
+    vulkan: "Vulkan",
+    sycl: "SYCL",
+    opencl: "OpenCL",
+  }[accelerator];
+  const os = { macos: "macOS", windows: "Windows", linux: "Linux" }[platform];
   return `${runtime} (${os} ${architecture === "arm64" ? "ARM64" : "x86-64"})`;
 }
 
-function runtimeSelectionAttemptText(attempt: SelectionRecord["attempts"][number], t: TFunction): string {
+function runtimeSelectionAttemptText(
+  attempt: SelectionRecord["attempts"][number],
+  t: TFunction,
+): string {
   if (attempt.stage === "runtime_update") {
     return t(`localAi.selectionUpdate_${attempt.result}`);
   }
@@ -219,7 +231,9 @@ export default function LocalAI({ onHostsChanged, onStatusChanged }: LocalAIProp
   const { t, i18n: translation } = useTranslation();
   const [status, setStatus] = useState<LocalAIStatus | null>(null);
   const [diagnostics, setDiagnostics] = useState<LocalAIDiagnostics | null>(null);
-  const [diagnosticsLoadState, setDiagnosticsLoadState] = useState<"loading" | "ready" | "error">("loading");
+  const [diagnosticsLoadState, setDiagnosticsLoadState] = useState<"loading" | "ready" | "error">(
+    "loading",
+  );
   const [selectionCopyFeedback, setSelectionCopyFeedback] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<LocalAIModelId>("gemma-4-e2b");
   const [mtpEnabled, setMtpEnabled] = useState(false);
@@ -1252,7 +1266,10 @@ export default function LocalAI({ onHostsChanged, onStatusChanged }: LocalAIProp
           ) : (
             <p>{t("localAi.noDiagnostics")}</p>
           )}
-          <section className="local-ai-selection-diagnostics" aria-labelledby="local-ai-selection-title">
+          <section
+            className="local-ai-selection-diagnostics"
+            aria-labelledby="local-ai-selection-title"
+          >
             <div className="local-ai-selection-heading">
               <h3 id="local-ai-selection-title">{t("localAi.selectionDiagnosticsTitle")}</h3>
               <Button
@@ -1272,21 +1289,42 @@ export default function LocalAI({ onHostsChanged, onStatusChanged }: LocalAIProp
                 {t("localAi.selectionCopy")}
               </Button>
             </div>
-            <p className="local-ai-runtime-summary">{t("localAi.selectionHistorical")}<br />{t("localAi.selectionNotLive")}</p>
+            <p className="local-ai-runtime-summary">
+              {t("localAi.selectionHistorical")}
+              <br />
+              {t("localAi.selectionNotLive")}
+            </p>
             {selectionRecord ? (
               <>
                 <dl>
-                  <div><dt>{t("localAi.selectionOperation")}</dt><dd>{t(`localAi.selectionOperation_${selectionRecord.operation}`)}</dd></div>
-                  <div><dt>{t("localAi.selectionOutcome")}</dt><dd>{t(`localAi.selectionOutcome_${selectionRecord.outcome}`)}</dd></div>
+                  <div>
+                    <dt>{t("localAi.selectionOperation")}</dt>
+                    <dd>{t(`localAi.selectionOperation_${selectionRecord.operation}`)}</dd>
+                  </div>
+                  <div>
+                    <dt>{t("localAi.selectionOutcome")}</dt>
+                    <dd>{t(`localAi.selectionOutcome_${selectionRecord.outcome}`)}</dd>
+                  </div>
                   {selectionRecord.selected_profile && (
-                    <div><dt>{t("localAi.selectionSelectedRuntime")}</dt><dd>{runtimeProfileName(selectionRecord.selected_profile)}</dd></div>
+                    <div>
+                      <dt>{t("localAi.selectionSelectedRuntime")}</dt>
+                      <dd>{runtimeProfileName(selectionRecord.selected_profile)}</dd>
+                    </div>
                   )}
                 </dl>
-                {selectionRecord.selected_profile && installedRuntimeProfile && selectionRecord.selected_profile !== installedRuntimeProfile && (
-                  <p className="local-ai-runtime-summary">{t("localAi.selectionInstalledDiffers", { profile: runtimeProfileName(installedRuntimeProfile) })}</p>
-                )}
+                {selectionRecord.selected_profile &&
+                  installedRuntimeProfile &&
+                  selectionRecord.selected_profile !== installedRuntimeProfile && (
+                    <p className="local-ai-runtime-summary">
+                      {t("localAi.selectionInstalledDiffers", {
+                        profile: runtimeProfileName(installedRuntimeProfile),
+                      })}
+                    </p>
+                  )}
                 {selectionRecord.selected_profile && status?.runtime_installed === false && (
-                  <p className="local-ai-runtime-summary">{t("localAi.selectionNoInstalledRuntime")}</p>
+                  <p className="local-ai-runtime-summary">
+                    {t("localAi.selectionNoInstalledRuntime")}
+                  </p>
                 )}
                 <h4>{t("localAi.selectionCandidates")}</h4>
                 {selectionRecord.attempts.length ? (
@@ -1295,14 +1333,36 @@ export default function LocalAI({ onHostsChanged, onStatusChanged }: LocalAIProp
                       <li key={`${index}-${attempt.profile}-${attempt.stage}`}>
                         <span>{runtimeProfileName(attempt.profile)}</span>
                         <span>{runtimeSelectionAttemptText(attempt, t)}</span>
-                        {attempt.reason && <span>{t("localAi.selectionReason", { reason: t(`localAi.selectionReason_${attempt.reason}`) })}</span>}
+                        {attempt.reason && (
+                          <span>
+                            {t("localAi.selectionReason", {
+                              reason: t(`localAi.selectionReason_${attempt.reason}`),
+                            })}
+                          </span>
+                        )}
                       </li>
                     ))}
                   </ol>
-                ) : <p>{t("localAi.selectionNoCandidates")}</p>}
+                ) : (
+                  <p>{t("localAi.selectionNoCandidates")}</p>
+                )}
               </>
-            ) : <p>{t(diagnosticsLoadState === "loading" ? "localAi.selectionLoading" : diagnosticsLoadState === "error" ? "localAi.selectionUnavailable" : selectionDiagnostics?.state === "invalid" ? "localAi.selectionInvalid" : "localAi.selectionMissing")}</p>}
-            <p role="status" aria-live="polite" className="local-ai-selection-feedback">{selectionCopyFeedback}</p>
+            ) : (
+              <p>
+                {t(
+                  diagnosticsLoadState === "loading"
+                    ? "localAi.selectionLoading"
+                    : diagnosticsLoadState === "error"
+                      ? "localAi.selectionUnavailable"
+                      : selectionDiagnostics?.state === "invalid"
+                        ? "localAi.selectionInvalid"
+                        : "localAi.selectionMissing",
+                )}
+              </p>
+            )}
+            <p role="status" aria-live="polite" className="local-ai-selection-feedback">
+              {selectionCopyFeedback}
+            </p>
           </section>
         </details>
       </details>

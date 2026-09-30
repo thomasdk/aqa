@@ -140,8 +140,17 @@ describe("runtime selection diagnostics", () => {
     outcome: "selected" as const,
     selected_profile: "windows-x86_64-cpu",
     attempts: [
-      { profile: "windows-x86_64-sycl", stage: "runtime_preflight" as const, result: "rejected" as const, reason: "driver_unavailable" as const },
-      { profile: "windows-x86_64-cpu", stage: "model_readiness" as const, result: "selected" as const },
+      {
+        profile: "windows-x86_64-sycl",
+        stage: "runtime_preflight" as const,
+        result: "rejected" as const,
+        reason: "driver_unavailable" as const,
+      },
+      {
+        profile: "windows-x86_64-cpu",
+        stage: "model_readiness" as const,
+        result: "selected" as const,
+      },
     ],
   };
 
@@ -156,12 +165,16 @@ describe("runtime selection diagnostics", () => {
     });
     const { container, root } = await renderLocalAI();
     const section = container.querySelector(".local-ai-selection-diagnostics")!;
-    expect(section.textContent).toContain("Results recorded during the last installation or update.");
+    expect(section.textContent).toContain(
+      "Results recorded during the last installation or update.",
+    );
     expect(section.textContent).toContain("Runtime selected successfully");
     expect(section.textContent).toContain("Currently installed runtime: Metal (macOS ARM64)");
-    expect(Array.from(section.querySelectorAll("ol > li > span:first-child")).map((node) => node.textContent)).toEqual([
-      "SYCL (Windows x86-64)", "CPU (Windows x86-64)",
-    ]);
+    expect(
+      Array.from(section.querySelectorAll("ol > li > span:first-child")).map(
+        (node) => node.textContent,
+      ),
+    ).toEqual(["SYCL (Windows x86-64)", "CPU (Windows x86-64)"]);
     expect(section.textContent).toContain("Runtime check did not pass; candidate rejected.");
     expect(section.textContent).toContain("Model startup check passed; runtime selected.");
     await act(async () => click(section.querySelector("button")!));
@@ -192,37 +205,58 @@ describe("runtime selection diagnostics", () => {
     const section = container.querySelector(".local-ai-selection-diagnostics")!;
     expect(section.textContent).toContain("Checked duringModel installation");
     expect(section.textContent).toContain("Selected runtimeMetal (macOS ARM64)");
-    expect(Array.from(section.querySelectorAll("ol > li > span:nth-child(2)")).map((node) => node.textContent)).toEqual([
-      "Device check passed.", "Model startup check passed; runtime selected.",
-    ]);
+    expect(
+      Array.from(section.querySelectorAll("ol > li > span:nth-child(2)")).map(
+        (node) => node.textContent,
+      ),
+    ).toEqual(["Device check passed.", "Model startup check passed; runtime selected."]);
     await act(async () => root.unmount());
   });
 
   it("does not call a failed historical selection successful", async () => {
     await i18n.changeLanguage("en");
-    installFetch(statusFixture({ runtime_installed: false }), undefined, undefined, 32_768, undefined, {
-      runtime_selection_diagnostics: {
-        state: "available",
-        record: {
-          ...record,
-          operation: "runtime_update",
-          outcome: "incomplete",
-          selected_profile: null,
-          attempts: [
-            { profile: "windows-x86_64-sycl", stage: "runtime_update", result: "rejected", reason: "runtime_launch_failed" },
-            { profile: "windows-x86_64-vulkan", stage: "runtime_update", result: "rejected", reason: "probe_timeout" },
-          ],
+    installFetch(
+      statusFixture({ runtime_installed: false }),
+      undefined,
+      undefined,
+      32_768,
+      undefined,
+      {
+        runtime_selection_diagnostics: {
+          state: "available",
+          record: {
+            ...record,
+            operation: "runtime_update",
+            outcome: "incomplete",
+            selected_profile: null,
+            attempts: [
+              {
+                profile: "windows-x86_64-sycl",
+                stage: "runtime_update",
+                result: "rejected",
+                reason: "runtime_launch_failed",
+              },
+              {
+                profile: "windows-x86_64-vulkan",
+                stage: "runtime_update",
+                result: "rejected",
+                reason: "probe_timeout",
+              },
+            ],
+          },
         },
       },
-    });
+    );
     const { container, root } = await renderLocalAI();
     const section = container.querySelector(".local-ai-selection-diagnostics")!;
     expect(section.textContent).toContain("No runtime selected in this record");
     expect(section.textContent).not.toContain("Runtime selected successfully");
     expect(section.textContent).toContain("Runtime update attempt failed; candidate rejected.");
-    expect(Array.from(section.querySelectorAll("ol > li > span:first-child")).map((node) => node.textContent)).toEqual([
-      "SYCL (Windows x86-64)", "Vulkan (Windows x86-64)",
-    ]);
+    expect(
+      Array.from(section.querySelectorAll("ol > li > span:first-child")).map(
+        (node) => node.textContent,
+      ),
+    ).toEqual(["SYCL (Windows x86-64)", "Vulkan (Windows x86-64)"]);
     await act(async () => root.unmount());
   });
 
@@ -235,7 +269,9 @@ describe("runtime selection diagnostics", () => {
       const { container, root } = await renderLocalAI();
       const section = container.querySelector(".local-ai-selection-diagnostics")!;
       expect((section.querySelector("button") as HTMLButtonElement).disabled).toBe(true);
-      expect(section.textContent).toContain(state === "missing" ? "No runtime selection diagnostics" : "could not be read");
+      expect(section.textContent).toContain(
+        state === "missing" ? "No runtime selection diagnostics" : "could not be read",
+      );
       await act(async () => root.unmount());
     }
     const writeText = vi.fn().mockRejectedValue(new Error("denied"));

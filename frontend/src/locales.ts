@@ -713,7 +713,8 @@ export const de = {
     selectionOutcome_incomplete: "In dieser Aufzeichnung wurde keine Laufzeit ausgewählt",
     selectionOutcome_selected: "Laufzeit erfolgreich ausgewählt",
     selectionSelectedRuntime: "Ausgewählte Laufzeit",
-    selectionInstalledDiffers: "Aktuell installierte Laufzeit: {{profile}}. Sie unterscheidet sich von der aufgezeichneten Auswahl.",
+    selectionInstalledDiffers:
+      "Aktuell installierte Laufzeit: {{profile}}. Sie unterscheidet sich von der aufgezeichneten Auswahl.",
     selectionNoInstalledRuntime: "Derzeit ist keine Laufzeit installiert.",
     selectionCandidates: "Durchgeführte Prüfungen",
     selectionNoCandidates: "Es wurden keine Prüfungen aufgezeichnet.",
@@ -2526,7 +2527,8 @@ const enLocalAiAdditions: Record<keyof typeof de.localAi, string> = {
   selectionOutcome_incomplete: "No runtime selected in this record",
   selectionOutcome_selected: "Runtime selected successfully",
   selectionSelectedRuntime: "Selected runtime",
-  selectionInstalledDiffers: "Currently installed runtime: {{profile}}. It differs from the recorded selection.",
+  selectionInstalledDiffers:
+    "Currently installed runtime: {{profile}}. It differs from the recorded selection.",
   selectionNoInstalledRuntime: "No runtime is currently installed.",
   selectionCandidates: "Checks performed",
   selectionNoCandidates: "No checks were recorded.",
