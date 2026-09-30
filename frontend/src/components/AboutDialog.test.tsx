@@ -42,6 +42,9 @@ describe("AboutDialog", () => {
     expect(dialog.getAttribute("aria-labelledby")).toBe("about-dialog-title");
     expect(dialog.textContent).toContain("About AQA");
     expect(dialog.textContent).toContain("Augmented Qualitative Analysis");
+    expect(dialog.textContent).toContain("Version 1.0.0");
+    expect(dialog.textContent).toContain("Stable Release");
+    expect(dialog.textContent).toContain("September 30, 2026");
     expect(dialog.textContent).toContain(
       "AI as critical friend: Softwaregestützte dialogische Analyse zur Augmentation qualitativer Analysen (AQA)",
     );
@@ -73,6 +76,8 @@ describe("AboutDialog", () => {
 
     await act(async () => setLocale("de"));
     expect(dialog.textContent).toContain("Über AQA");
+    expect(dialog.textContent).toContain("Stabile Version");
+    expect(dialog.textContent).toContain("30. September 2026");
     expect(dialog.textContent).toContain("Institut für Sozialwissenschaften");
     expect(dialog.textContent).toContain(
       "Abteilung für Soziologie mit Schwerpunkt sozialwissenschaftliche Forschungsmethoden",

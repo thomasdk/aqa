@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0-beta.1",
-  "releaseDate": null,
-  "releaseStatus": "prerelease",
+  "version": "1.0.0",
+  "releaseDate": "2026-09-30",
+  "releaseStatus": "stable",
   "copyright": "Copyright © 2026 Thomas Krause",
   "license": "MIT License",
   "links": {

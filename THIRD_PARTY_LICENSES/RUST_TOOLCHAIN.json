@@ -1,8 +1,8 @@
 {
   "cargo_about": "cargo-about 0.9.2",
   "inputs": {
-    "desktop/src-tauri/Cargo.lock": "2d8e150320ca227033826ef699582a8f2585b5ec5eb1eb10abd6bd2d058ec32f",
-    "desktop/src-tauri/Cargo.toml": "177639368995e0d58fd3ad94dfe617ab7809d8d8daab9eec6073909ef9a0194a",
+    "desktop/src-tauri/Cargo.lock": "4f697e860bc9e2f57de1f9bc4151a7f24645da93ed445004696935db1b7652c3",
+    "desktop/src-tauri/Cargo.toml": "9e80e465619c70ed4d82b87b789c2272b5d039f71fd51d73dd4296d98c84d060",
     "desktop/src-tauri/about.hbs": "86eff00af2d5573dd73b216d7e68bd78ff422e99187ac384cd192bf9bb9da9f9",
     "desktop/src-tauri/about.toml": "ab6562b1504b3146b5c6687277857aa65d4a86eb4fb0de15bb8d0c446c02b831"
   },

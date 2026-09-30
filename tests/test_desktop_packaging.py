@@ -80,9 +80,9 @@ def test_desktop_metadata_uses_one_product_identity_and_version() -> None:
         item for item in cargo_lock["package"] if item["name"] == "aqa-desktop"
     )
     versions.add(desktop_lock_package["version"])
-    assert versions == {"1.0.0-beta.1"}
-    assert release_info["releaseDate"] is None
-    assert release_info["releaseStatus"] == "prerelease"
+    assert versions == {"1.0.0"}
+    assert release_info["releaseDate"] == "2026-09-30"
+    assert release_info["releaseStatus"] == "stable"
     assert release_info["links"]["githubRepository"] is None
     api_source = (ROOT / "src/service/api_app.py").read_text()
     assert "from src import __version__" in api_source

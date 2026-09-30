@@ -1,7 +1,7 @@
 {
   "name": "aqa-desktop",
   "private": true,
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "icon": "tauri icon ../frontend/src/assets/favicon.svg -o src-tauri/icons",

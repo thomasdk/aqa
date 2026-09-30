@@ -94,7 +94,7 @@ for entry in "${PLATFORMS[@]}"; do
     echo "[$platform] Existing runtime is incomplete or stale; downloading a replacement."
   fi
 
-  tmpfile=$(mktemp /tmp/python-standalone.XXXXXX.tar.gz)
+  tmpfile=$(mktemp /tmp/python-standalone.tar.gz.XXXXXX)
   echo "[$platform] Downloading from $url..."
   curl -L -o "$tmpfile" "$url"
 

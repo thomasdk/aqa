@@ -7,8 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-This section is the draft for AQA's initial public release. A version and release
-date will be assigned only when that release is made.
+## [1.0.0] - 2026-09-30
 
 ### Added
 

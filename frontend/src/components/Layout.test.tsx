@@ -3209,8 +3209,8 @@ describe("System language settings", () => {
     const releaseSection = container.querySelector<HTMLElement>(".system-release-information")!;
     expect(releaseSection.textContent).toContain("Release-Informationen");
     expect(releaseSection.textContent).toContain(releaseInfo.version);
-    expect(releaseSection.textContent).toContain("Vorabversion");
-    expect(releaseSection.textContent).toContain("Noch nicht festgelegt");
+    expect(releaseSection.textContent).toContain("Stabile Version");
+    expect(releaseSection.textContent).toContain("30. September 2026");
     expect(releaseSection.textContent).toContain("GitHub-Repository");
     expect(releaseSection.textContent).not.toContain("Thomas Krause");
 

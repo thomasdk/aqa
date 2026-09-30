@@ -3,9 +3,9 @@ import { formatReleaseDate, releaseInfo } from "./releaseInfo";
 
 describe("release information", () => {
   it("provides the shared version, release status, and project-link contract", () => {
-    expect(releaseInfo.version).toMatch(/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/);
-    expect(releaseInfo.releaseStatus).toBe("prerelease");
-    expect(releaseInfo.releaseDate).toBeNull();
+    expect(releaseInfo.version).toBe("1.0.0");
+    expect(releaseInfo.releaseStatus).toBe("stable");
+    expect(releaseInfo.releaseDate).toBe("2026-09-30");
     expect(releaseInfo.links.universityProject).toBe(
       "https://www.sowi.uni-stuttgart.de/abteilungen/ses/forschung/augmented-qualitative-analysis-aqa/",
     );
