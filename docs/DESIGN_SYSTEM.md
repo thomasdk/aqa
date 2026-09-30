@@ -84,11 +84,7 @@ Use `BlockedActionHint` beside a visible disabled control when missing informati
 - `Card`: raised or recessed bounded surface. Use only when the surface itself is meaningful; do not wrap every section.
 - `ActionGroup`: wrapping start, end, or spread alignment for related actions.
 - `DialogFooter`: the standard modal action row and narrow-layout stacking behavior.
-- Editor dialogs use `Modal layout="editor"` with one direct `EditorDialogBody` or
-  `EditorDialogForm`, followed by a direct `DialogFooter`. This shared shell owns the fixed,
-  divider-separated action region and independently scrolling body; feature styles may set the
-  dialog width but must not recreate its padding, divider, background, or overflow behavior. Use
-  `EditorDialogError` for failed-save feedback between the title and body.
+- Editor dialogs use `Modal layout="editor"` with one direct `EditorDialogBody` or `EditorDialogForm`, followed by a direct `DialogFooter`. This shared shell owns the fixed, divider-separated action region and independently scrolling body; feature styles may set the dialog width but must not recreate its padding, divider, background, or overflow behavior. Use `EditorDialogError` for failed-save feedback between the title and body.
 
 Management tables keep native table markup because column structures and responsive minimum widths differ. Their shared contract is local horizontal scrolling, tokenized header/row/border treatment, and an action group in the action cell. A scroll wrapper that can overflow must be keyboard focusable and named when keyboard users otherwise cannot reach its horizontal content.
 
