@@ -34,6 +34,13 @@ date will be assigned only when that release is made.
   builds is left in place and is not imported automatically. Export anything
   needed from the earlier build before moving or removing its data.
 
+### Security
+
+- Bind the source-development frontend server to loopback by default to reduce
+  exposure of development files to other machines.
+- Update affected transitive API-generation, build and test dependencies within
+  their compatible version ranges.
+
 ### Technical Notes
 
 - AQA is distributed as a Tauri desktop application containing one
