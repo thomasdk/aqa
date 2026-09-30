@@ -30,7 +30,7 @@ Prefer clear names, types, small functions, and straightforward control flow. Co
 
 ## Compatibility Before Public Distribution
 
-Until AQA is first distributed publicly, prefer a clean current schema, API, and UI behavior over migrations, legacy fallbacks, or compatibility shims. Internal beta numbering alone does not create compatibility obligations. At the first public distribution, reassess this policy before changing persisted formats that public users may rely on. Do not add compatibility code earlier unless a maintainer explicitly requests it.
+Until AQA is first distributed publicly, prefer a clean current schema, API, and UI behavior over migrations, legacy fallbacks, or compatibility shims. At the first public distribution, reassess this policy before changing persisted formats that public users may rely on. Do not add compatibility code earlier unless a maintainer explicitly requests it.
 
 ## Working Mode
 

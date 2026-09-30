@@ -1,6 +1,6 @@
 # Installation and First Use
 
-AQA is experimental research software. Public packages are planned without trusted publisher signing. The public download location and publication date are not yet assigned. When packages are published, obtain them from the official release channel and verify the package filename and SHA-256 checksum provided there. Updates and responses to reports cannot be guaranteed.
+AQA is experimental research software. Packages lack trusted publisher signing. Obtain packages and their checksums from the project, and verify the package filename and SHA-256 checksum before opening a package. Updates and responses to reports cannot be guaranteed.
 
 ## Choose the correct package
 
@@ -18,7 +18,7 @@ Open the disk image and drag AQA to Applications. Because the package lacks trus
 
 ### Windows
 
-Your browser may first warn about downloading an uncommon executable. That download warning is separate from the Windows SmartScreen dialog shown when an app starts. Do not continue if either warning reports malware or a changed/tampered file. For the ordinary unsigned-app launch dialog **Windows protected your PC**, and only when the package and checksum came from the official release channel, use **More info → Run anyway** if those options are available. If Windows Defender Smart App Control or an organisation policy blocks the app, there may be no per-app bypass; ask the device administrator rather than disabling protection. Microsoft explains [reputation-based protection](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation), [Smart App Control](https://support.microsoft.com/en-us/windows/security/threat-malware-protection/smart-app-control-frequently-asked-questions), and [administrator-managed SmartScreen settings](https://learn.microsoft.com/en-us/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/available-settings).
+Your browser may first warn about downloading an uncommon executable. That download warning is separate from the Windows SmartScreen dialog shown when an app starts. Do not continue if either warning reports malware or a changed/tampered file. For the ordinary unsigned-app launch dialog **Windows protected your PC**, and only when the package and matching checksum came from the project, use **More info → Run anyway** if those options are available. If Windows Defender Smart App Control or an organisation policy blocks the app, there may be no per-app bypass; ask the device administrator rather than disabling protection. Microsoft explains [reputation-based protection](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation), [Smart App Control](https://support.microsoft.com/en-us/windows/security/threat-malware-protection/smart-app-control-frequently-asked-questions), and [administrator-managed SmartScreen settings](https://learn.microsoft.com/en-us/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/available-settings).
 
 ### Linux
 
@@ -45,8 +45,6 @@ Mutable data is stored per user:
 - macOS: `~/Library/Application Support/AQA`
 - Windows: `%LOCALAPPDATA%\AQA`
 - Linux: `$XDG_DATA_HOME/aqa`, or `~/.local/share/aqa`
-
-The rename is a clean break for this pre-release product. Data from internal `AQA Workbench` builds remains untouched in its old directory and is not imported automatically.
 
 This directory can contain settings, locally stored API keys, sessions, prompt customisations, logs, and Integrated-AI files. Ordinary uninstallation is not expected to remove it; that is a source-level assessment, not a native observation on every platform. To remove research data, first export anything required, close AQA, uninstall it, and then remove only the matching application-data directory under your own user account. Do not delete a broader parent directory.
 
