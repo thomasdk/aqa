@@ -1,0 +1,16 @@
+quick_actions:
+  - id: debate
+    label: Debate
+    prompt: Continue the discussion by responding to the contributions of the previous round.
+  - id: deepen
+    label: Deepen
+    prompt: Deepen the analysis with closer attention to the material and its implications.
+  - id: challenge
+    label: Challenge
+    prompt: Challenge the current interpretations and develop plausible alternatives.
+  - id: focus
+    label: Focus
+    prompt: Focus the next round on the most important unresolved issue.
+  - id: explore
+    label: Explore
+    prompt: Explore parts of the material and possible interpretations you previously ignored.

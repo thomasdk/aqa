@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-pick-local-ai-import-directory"
+description = "Enables the pick_local_ai_import_directory command without any pre-configured scope."
+commands.allow = ["pick_local_ai_import_directory"]
+
+[[permission]]
+identifier = "deny-pick-local-ai-import-directory"
+description = "Denies the pick_local_ai_import_directory command without any pre-configured scope."
+commands.deny = ["pick_local_ai_import_directory"]

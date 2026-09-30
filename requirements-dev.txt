@@ -1,0 +1,7 @@
+-r requirements.txt
+
+pre-commit
+pytest
+pytest-cov
+ruff
+httpx2==2.9.1

@@ -1,0 +1,52 @@
+{
+  "name": "aqa",
+  "version": "1.0.0-beta.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19 <21"
+  },
+  "scripts": {
+    "dev": "vite --host --open",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "api:generate": "python ../scripts/export_openapi.py && node ./scripts/generate-api-types.mjs",
+    "api:check": "python ../scripts/export_openapi.py --check && node ./scripts/generate-api-types.mjs --check",
+    "test": "node ./scripts/check-i18n.mjs && node ./scripts/run-vitest.mjs",
+    "test:accessibility": "node ./scripts/check-i18n.mjs && node ./scripts/run-vitest.mjs --run src/accessibilityStyles.test.ts src/components/design-system/controls.test.tsx src/components/design-system/layout.test.tsx src/components/design-system/patterns.test.tsx src/components/IconButton.test.tsx src/components/MaterialSymbol.test.tsx src/components/NoticeBanner.test.tsx src/components/AIReadinessIndicator.test.tsx src/components/DiscussionView.test.tsx src/components/Layout.test.tsx src/components/LocalAI.test.tsx src/components/Modal.test.tsx src/components/NetworkConfig.test.tsx src/components/PromptConfigurationManager.test.tsx src/components/QuickActionsManager.test.tsx src/components/RoleManager.test.tsx src/components/SessionsTab.test.tsx src/components/ViewNavigation.test.tsx",
+    "coverage": "node ./scripts/check-i18n.mjs && node ./scripts/run-vitest.mjs --coverage",
+    "test:responsive": "playwright test",
+    "test:product": "playwright test -c playwright.product.config.ts",
+    "test:i18n-raw": "node ./scripts/check-i18n.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "i18next": "^25.10.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^15.7.4",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.62.0",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.2",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^2.1.9",
+    "eslint": "^10.8.0",
+    "eslint-plugin-jsx-a11y-x": "^0.2.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "jsdom": "^29.1.1",
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.9.6",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.65.0",
+    "vite": "^5.3.1",
+    "vitest": "^2.1.9"
+  }
+}

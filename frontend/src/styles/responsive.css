@@ -1,0 +1,547 @@
+.sessions-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sessions-tab-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.sessions-tab-header h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
+  font-weight: 700;
+  color: var(--aqa-ink);
+  letter-spacing: -0.005em;
+}
+
+.sessions-tab-header p {
+  margin: 0;
+  color: var(--aqa-ink-muted);
+  font-size: 0.92rem;
+}
+
+.sessions-notice,
+.sessions-error {
+  margin: 0;
+}
+
+.sessions-status {
+  color: var(--aqa-ink-muted);
+  margin: 0;
+  padding: 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+.sessions-status.is-error {
+  color: var(--aqa-state-danger);
+}
+
+.sessions-status-detail {
+  font-size: 0.75rem;
+  color: var(--aqa-ink-muted);
+  margin: 0.25rem 0 0.5rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.sessions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sessions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--aqa-surface-raised);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.sessions-row.is-current {
+  border-color: var(--aqa-aqua);
+  background: var(--aqa-surface-recessed);
+  box-shadow: 0 0 0 1px var(--aqa-selection-border);
+}
+
+/* In edit mode the title input is the visual anchor. Keep the Save/Cancel
+   action group aligned to its top edge rather than centered against the
+   input-plus-metadata column. */
+.sessions-row.is-editing {
+  align-items: flex-start;
+}
+
+.sessions-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 240px;
+  flex: 1 1 280px;
+}
+
+.sessions-title-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px dashed transparent;
+  color: var(--aqa-ink);
+  padding: 0.15rem 0;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  width: fit-content;
+  max-width: 100%;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.sessions-title-button:hover {
+  border-color: var(--aqa-border);
+  background: var(--aqa-surface-recessed);
+}
+
+.sessions-title-button:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+.sessions-title {
+  word-break: break-word;
+}
+
+.sessions-title-edit-icon {
+  color: var(--aqa-ink-muted);
+  font-size: 0.85rem;
+}
+
+.sessions-title-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.sessions-title-input {
+  flex: 1 1 240px;
+}
+
+.sessions-badge {
+  display: inline-block;
+  background: var(--aqa-aqua);
+  color: var(--aqa-action-primary-ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: fit-content;
+}
+
+.sessions-meta {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--aqa-ink-muted);
+}
+
+.sessions-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.material-symbol {
+  display: inline-block;
+  flex: 0 0 auto;
+  font-family: "Material Symbols Rounded";
+  font-size: 1.1em;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  vertical-align: -0.13em;
+  white-space: nowrap;
+  font-variation-settings:
+    "opsz" 24,
+    "wght" 400,
+    "FILL" 0,
+    "GRAD" 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mirror each icon button's accessible name in a pointer and keyboard tooltip. */
+.icon-button {
+  position: relative;
+}
+
+.icon-button::after {
+  position: absolute;
+  z-index: 30;
+  right: 0;
+  bottom: calc(100% + 0.45rem);
+  max-width: min(18rem, 70vw);
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-pool-deep);
+  box-shadow: var(--aqa-shadow-popover);
+  color: var(--aqa-ink);
+  content: attr(data-tooltip);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.15rem);
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+  overflow-wrap: anywhere;
+  visibility: hidden;
+  white-space: normal;
+  width: max-content;
+}
+
+.icon-button:not([data-tooltip-dismissed="true"]):hover::after,
+.icon-button:not([data-tooltip-dismissed="true"]):focus-visible::after {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.aqa-brand {
+  display: flex;
+  /* A full-width tagline must wrap below the complete brand lockup. */
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--aqa-ink);
+  user-select: none;
+  max-width: 100%;
+  --aqa-brand-letter-size: clamp(1.9rem, 3.5vw, 2.4rem);
+  /* The path paints 760/960 of its box; the Tomorrow glyph cap is likewise
+     visibly smaller than its font box, so a shared box size—not a line-box
+     compensation—keeps the painted drops level with the visual AQA letters. */
+  --aqa-drop-box-size: var(--aqa-brand-letter-size);
+  --aqa-wave-duration: 3.9s;
+  --aqa-wave-step: 0.25s;
+}
+
+button.aqa-brand {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+button.aqa-brand:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 0.35rem;
+  border-radius: var(--aqa-radius-input);
+}
+
+.aqa-brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18em;
+  color: var(--aqa-aqua);
+  flex: 0 0 auto;
+}
+
+.aqa-drop {
+  display: inline-block;
+  width: var(--aqa-drop-box-size);
+  height: var(--aqa-drop-box-size);
+  fill: currentColor;
+  color: var(--aqa-aqua);
+}
+
+.aqa-drop-outline {
+  color: var(--aqa-aqua-bright);
+  opacity: 0.95;
+}
+.aqa-drop-half {
+  color: var(--aqa-aqua);
+  opacity: 0.85;
+}
+.aqa-drop-full {
+  color: var(--aqa-aqua);
+  opacity: 0.75;
+}
+
+.aqa-brand-wordmark {
+  font-family: "Tomorrow", sans-serif;
+  font-size: var(--aqa-brand-letter-size);
+  font-weight: 900;
+  letter-spacing: 0.055em;
+  line-height: 0.95;
+  color: var(--aqa-ink);
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.aqa-brand-letter {
+  display: inline-block;
+}
+
+.aqa-brand [data-aqa-wave] {
+  animation: aqa-brand-wave var(--aqa-wave-duration) ease-in-out infinite;
+  transform-origin: center;
+  transition: color 180ms ease;
+}
+
+.aqa-brand[data-aqa-generating="true"] [data-aqa-wave] {
+  color: var(--aqa-aqua-bright);
+}
+
+.aqa-brand [data-aqa-wave="1"] {
+  animation-delay: calc(var(--aqa-wave-duration) * -1);
+}
+.aqa-brand [data-aqa-wave="2"] {
+  animation-delay: calc((var(--aqa-wave-duration) - var(--aqa-wave-step)) * -1);
+}
+.aqa-brand [data-aqa-wave="3"] {
+  animation-delay: calc((var(--aqa-wave-duration) - var(--aqa-wave-step) * 2) * -1);
+}
+.aqa-brand [data-aqa-wave="4"] {
+  animation-delay: calc((var(--aqa-wave-duration) - var(--aqa-wave-step) * 3) * -1);
+}
+.aqa-brand [data-aqa-wave="5"] {
+  animation-delay: calc((var(--aqa-wave-duration) - var(--aqa-wave-step) * 4) * -1);
+}
+.aqa-brand [data-aqa-wave="6"] {
+  animation-delay: calc((var(--aqa-wave-duration) - var(--aqa-wave-step) * 5) * -1);
+}
+.aqa-brand [data-aqa-wave="7"] {
+  animation-delay: calc((var(--aqa-wave-duration) - var(--aqa-wave-step) * 6) * -1);
+}
+
+.aqa-brand-tagline {
+  color: var(--aqa-ink-muted);
+  font-size: 0.72rem;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+  flex: 0 0 100%;
+  margin-top: 0.05rem;
+}
+
+.agent-waveform,
+.agent-status-row.is-writing,
+.activity-timer,
+.message-loading {
+  color: var(--aqa-aqua);
+}
+.icon-spinning {
+  animation: aqa-icon-spin 1.1s linear infinite;
+}
+
+@keyframes aqa-brand-wave {
+  0%,
+  100% {
+    opacity: 0.46;
+    transform: translateY(0);
+  }
+  36% {
+    opacity: 1;
+    transform: translateY(-0.06em);
+  }
+  55% {
+    opacity: 0.62;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aqa-icon-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aqa-brand [data-aqa-wave],
+  .icon-spinning,
+  .agent-waveform span,
+  .streaming-caret,
+  .message-loading,
+  .discussion-message.is-just-arrived {
+    animation: none !important;
+  }
+
+  .icon-button::after {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .aqa-brand {
+    --aqa-brand-letter-size: 1.8rem;
+  }
+}
+
+.sessions-filter {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.25rem 0.35rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-raised);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.sessions-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.sessions-bulk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.sessions-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.sessions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.sessions-group-heading {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--aqa-ink-muted);
+}
+
+/* Secondary favorite state — never an extra card border. The aqua
+   `is-current` border must remain the dominant visual state for the
+   active session, so favorites only get a subtle icon tint. */
+.sessions-row.is-favorite {
+  background: var(--aqa-surface-raised);
+  border-color: var(--aqa-border);
+}
+
+.sessions-row.is-current.is-favorite {
+  /* When both states apply, the active-session treatment wins. The
+     favorite star icon is still rendered to keep its meaning visible. */
+  background: var(--aqa-surface-recessed);
+  border-color: var(--aqa-aqua);
+  box-shadow: 0 0 0 1px var(--aqa-selection-border);
+}
+
+.sessions-status-empty-favorites {
+  /* The favorite-filter empty state is information, not a warning — keep
+     it close to the muted "no sessions" tone. */
+  color: var(--aqa-ink-muted);
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .material-collapse-btn,
+  .sessions-title-button,
+  .ds-favorite-toggle,
+  .activity-log-clear-btn {
+    min-height: var(--aqa-control-height-touch);
+  }
+
+  .material-collapse-btn,
+  .ds-favorite-toggle {
+    min-width: var(--aqa-control-height-touch);
+  }
+
+  .preview-control-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .preview-control-group select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .nc-header > .ds-button--primary {
+    flex: 0 0 auto;
+  }
+
+  .sessions-filter {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .sessions-toolbar {
+    align-items: stretch;
+  }
+  .sessions-filter-option {
+    flex: 1 1 auto;
+  }
+  .sessions-bulk-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .sessions-bulk-actions .ds-button {
+    flex: 1 1 12rem;
+  }
+  .sessions-row-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .sessions-row-main {
+    min-width: 0;
+    flex-basis: 100%;
+  }
+  .ds-favorite-toggle {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}

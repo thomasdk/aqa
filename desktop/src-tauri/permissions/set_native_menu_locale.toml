@@ -1,0 +1,7 @@
+[[permission]]
+identifier = "allow-set-native-menu-locale"
+description = "Allows the loopback-served AQA UI to synchronize app-owned native menu labels."
+
+[permission.commands]
+allow = ["set_native_menu_locale"]
+deny = []

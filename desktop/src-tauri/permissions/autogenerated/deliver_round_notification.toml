@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-deliver-round-notification"
+description = "Enables the deliver_round_notification command without any pre-configured scope."
+commands.allow = ["deliver_round_notification"]
+
+[[permission]]
+identifier = "deny-deliver-round-notification"
+description = "Denies the deliver_round_notification command without any pre-configured scope."
+commands.deny = ["deliver_round_notification"]

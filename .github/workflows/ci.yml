@@ -1,0 +1,183 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend (${{ matrix.os }}, Python 3.13)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "windows-latest"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Ruff
+        run: python -m ruff check .
+
+      - name: Ruff formatting
+        run: python -m ruff format --check .
+
+      - name: Pytest
+        run: >-
+          python -m pytest -q -m "not integration"
+          -W error::DeprecationWarning:src
+          --cov=src --cov-report=term-missing --cov-report=xml
+          tests
+
+      - name: Upload coverage
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: coverage.xml
+          if-no-files-found: error
+          retention-days: 14
+
+  frontend:
+    name: Frontend (Node.js 20)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install backend test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Formatting
+        working-directory: frontend
+        run: npm run format:check
+
+      - name: ESLint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: TypeScript
+        working-directory: frontend
+        run: npm run typecheck
+
+      - name: Accessibility contracts
+        working-directory: frontend
+        run: npm run test:accessibility
+
+      - name: Generated API contract drift
+        working-directory: frontend
+        run: npm run api:check
+
+      - name: Unit, i18n, and coverage
+        working-directory: frontend
+        run: npm run coverage
+
+      - name: Upload frontend coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: frontend/coverage/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Production build
+        working-directory: frontend
+        run: npm run build
+
+      - name: Shipped web product smoke
+        run: python -m pytest -q tests/test_web_product_smoke.py
+
+  responsive-browser:
+    name: Responsive browser tests (Chromium)
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install backend test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Install Chromium
+        working-directory: frontend
+        run: npm exec playwright install chromium
+
+      - name: Production build
+        working-directory: frontend
+        run: npm run build
+
+      - name: Playwright
+        working-directory: frontend
+        run: npm run test:responsive
+
+      - name: FastAPI product browser tests
+        working-directory: frontend
+        run: npm run test:product
+
+      - name: Upload Playwright diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-diagnostics
+          path: |
+            frontend/playwright-report/
+            frontend/playwright-product-report/
+            frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 14

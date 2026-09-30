@@ -1,0 +1,14 @@
+# Direct dependencies embedded in each desktop package.
+# Excludes developer-only and test dependencies such as pytest and fonttools.
+#
+# This is the human-authored input file. The fully pinned, hashed lock file is
+# requirements-runtime.txt at the repo root. Keep these entries in the
+# documented order — the provenance test asserts it exactly.
+fastapi
+loguru
+pydantic
+pydantic-settings
+python-dotenv
+pyyaml
+requests
+uvicorn

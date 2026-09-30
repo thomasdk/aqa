@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0-beta.1",
+  "releaseDate": null,
+  "releaseStatus": "prerelease",
+  "copyright": "Copyright © 2026 Thomas Krause",
+  "license": "MIT License",
+  "links": {
+    "universityProject": "https://www.sowi.uni-stuttgart.de/abteilungen/ses/forschung/augmented-qualitative-analysis-aqa/",
+    "githubRepository": null
+  }
+}

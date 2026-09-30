@@ -1,0 +1,2204 @@
+.discussion-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aqa-section-gap);
+  min-width: 0;
+}
+
+.discussion-title-bar {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0.65rem 0.85rem;
+  background: var(--aqa-surface-raised);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+}
+
+.discussion-title-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--aqa-ink);
+  font: inherit;
+  font-family: var(--aqa-font-display);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.discussion-title-button:disabled {
+  cursor: default;
+}
+
+.discussion-title-button:not(:disabled):hover .discussion-title-text {
+  color: var(--aqa-aqua-bright);
+}
+
+.discussion-title-button:focus-visible,
+.discussion-title-input:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 3px;
+}
+
+.discussion-title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discussion-title-edit-icon {
+  flex: 0 0 auto;
+  color: var(--aqa-ink-subtle);
+  font-family: var(--aqa-font-ui);
+  font-size: 0.9em;
+}
+
+.discussion-title-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.discussion-title-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  color: var(--aqa-ink);
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+}
+
+.discussion-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aqa-section-gap);
+  flex: 1;
+  min-height: 0;
+}
+
+.discussion-mode-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--aqa-aqua) 48%, var(--aqa-border));
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-state-info-bg);
+  color: var(--aqa-ink);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.discussion-mode-notice > .material-symbol {
+  flex: 0 0 auto;
+  margin-top: 0.05rem;
+  color: var(--aqa-state-info);
+  font-size: 1rem;
+}
+
+.discussion-mode-notice strong {
+  display: block;
+  font-weight: 700;
+}
+
+.discussion-mode-notice p {
+  margin: 0.15rem 0 0;
+}
+
+.discussion-messages {
+  flex: 1;
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-y: auto;
+  /* Markdown tables and code blocks own their local x-scroll. Keeping this
+     rounded transcript vertically scroll-only avoids a native corner gutter. */
+  overflow-x: hidden;
+  /* Keep the native scrollbar inside the transcript's surface so it cannot
+     paint over the rounded outline at the top-right or bottom-right corner. */
+  scrollbar-color: var(--aqa-water-line) transparent;
+  scrollbar-width: thin;
+  max-height: min(72vh, 44rem);
+  max-height: min(72dvh, 44rem);
+}
+
+/* Once a round has produced actual content, give the transcript a generous
+   reading area before asking the user to scroll through it. Empty and
+   not-yet-started discussions keep their compact state. */
+.discussion-view.has-discussion-content .discussion-messages {
+  min-height: min(32rem, 55dvh);
+}
+
+.discussion-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-raised);
+  border: 1px solid var(--aqa-border);
+}
+
+.discussion-message.message-user {
+  /* User messages keep a distinct surface tint, not a saturated royal blue. */
+  background: var(--aqa-surface-user);
+  border-color: var(--aqa-border);
+}
+
+.discussion-message.message-agent {
+  border-left-width: 3px;
+}
+
+/* The synthesis is a post-round observation layer, not an agent answer. */
+.discussion-message.message-synthesis {
+  background: var(--aqa-surface-synthesis);
+  border-color: var(--aqa-synthesis-border);
+  border-left: 4px solid var(--aqa-synthesis-accent);
+}
+
+.message-synthesis .message-sender {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--aqa-synthesis-ink);
+}
+
+.message-synthesis .message-content {
+  color: var(--aqa-markdown-strong);
+}
+
+.discussion-message.streaming {
+  opacity: 0.95;
+}
+
+.message-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--aqa-ink-muted);
+}
+
+.message-sender {
+  font-weight: 600;
+  color: var(--aqa-ink);
+}
+
+.message-theory {
+  font-style: italic;
+  color: var(--aqa-state-info);
+}
+
+.message-round {
+  margin-left: auto;
+  color: var(--aqa-ink-subtle);
+}
+
+.message-loading {
+  animation: pulse 1.5s ease-in-out infinite;
+  color: var(--aqa-aqua);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.message-content {
+  line-height: 1.6;
+  word-break: break-word;
+  /* `white-space: pre-wrap` was removed so Markdown children (headings,
+     lists, code blocks) render with their own layout. Plain-text bubbles
+     (e.g. the Moderator message and streaming caret) still wrap normally
+     because we don't add `pre` styling to text nodes — Markdown code blocks
+     get their own horizontal-scroll container. */
+  overflow-wrap: anywhere;
+}
+
+/* Scope model-authored Markdown so element styles cannot leak into the app shell. */
+.md-content > :first-child {
+  margin-top: 0;
+}
+.md-content > :last-child {
+  margin-bottom: 0;
+}
+
+.md-content p {
+  margin: 0 0 0.6rem 0;
+}
+
+.md-content p:last-child {
+  margin-bottom: 0;
+}
+
+.md-content h1,
+.md-content h2,
+.md-content h3,
+.md-content h4,
+.md-content h5,
+.md-content h6 {
+  margin: 0.9rem 0 0.4rem 0;
+  line-height: 1.3;
+  color: var(--aqa-markdown-heading);
+  font-weight: 600;
+}
+
+.md-content h1 {
+  font-size: 1.25rem;
+}
+.md-content h2 {
+  font-size: 1.1rem;
+}
+.md-content h3 {
+  font-size: 1rem;
+}
+.md-content h4 {
+  font-size: 0.95rem;
+}
+.md-content h5 {
+  font-size: 0.9rem;
+}
+.md-content h6 {
+  font-size: 0.85rem;
+  color: var(--aqa-markdown-subheading);
+}
+
+.md-content strong {
+  color: var(--aqa-markdown-strong);
+  font-weight: 600;
+}
+.md-content em {
+  color: var(--aqa-markdown-emphasis);
+}
+
+.md-content ul,
+.md-content ol {
+  margin: 0.4rem 0 0.6rem 0;
+  padding-left: 1.4rem;
+  list-style-position: outside;
+}
+
+.md-content ul {
+  list-style-type: disc;
+}
+
+.md-content ol {
+  list-style-type: decimal;
+}
+
+.md-content li {
+  margin: 0.15rem 0;
+}
+
+.md-content li > ul,
+.md-content li > ol {
+  margin: 0.15rem 0 0.15rem 0;
+}
+
+.md-content li > ul {
+  list-style-type: circle;
+}
+
+.md-content li > ol {
+  list-style-type: lower-alpha;
+}
+
+.md-content blockquote {
+  margin: 0.5rem 0;
+  padding: 0.3rem 0.8rem;
+  border-left: 3px solid var(--aqa-border);
+  color: var(--aqa-ink-muted);
+  background: var(--aqa-surface-recessed);
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.md-content blockquote > :first-child {
+  margin-top: 0;
+}
+.md-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.md-content a {
+  color: var(--aqa-state-info);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
+
+.md-content a:hover {
+  color: var(--aqa-aqua-bright);
+}
+
+.md-content code {
+  font-family: var(--aqa-font-mono);
+  font-size: 0.85em;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.2rem;
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink);
+  /* Inline code shouldn't break out of the bubble horizontally. */
+  word-break: break-word;
+}
+
+.md-content pre {
+  margin: 0.5rem 0;
+  padding: 0.6rem 0.8rem;
+  background: var(--aqa-surface-code);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.md-content pre > code {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--aqa-ink);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  white-space: pre;
+  word-break: normal;
+}
+
+.md-content table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0.5rem 0;
+  /* Horizontal scroll lives inside the bubble, not the page. */
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: 0.25rem;
+}
+
+.md-content th,
+.md-content td {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--aqa-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.md-content th {
+  background: var(--aqa-surface-header);
+  color: var(--aqa-ink);
+  font-weight: 600;
+}
+
+.md-content hr {
+  border: 0;
+  border-top: 1px solid var(--aqa-border);
+  margin: 0.8rem 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-content * {
+    scroll-behavior: auto !important;
+  }
+}
+
+.message-error {
+  color: var(--aqa-state-danger);
+  font-size: 0.85rem;
+}
+
+.streaming-indicator {
+  text-align: center;
+  padding: 0.5rem;
+  color: var(--aqa-ink-subtle);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.followup-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem 0;
+  border-top: 1px solid var(--aqa-border);
+}
+
+.discussion-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.9rem 0.75rem;
+  background: var(--aqa-state-danger-bg);
+  border: 1px solid var(--aqa-state-danger);
+  border-left: 3px solid var(--aqa-state-danger);
+  border-radius: var(--aqa-radius-input);
+  color: var(--aqa-ink);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.discussion-disclaimer > .material-symbol {
+  flex: 0 0 auto;
+  margin-top: 0.05rem;
+  color: var(--aqa-state-danger);
+  font-size: 1.1rem;
+}
+
+.discussion-disclaimer strong {
+  display: block;
+  font-weight: 700;
+}
+
+.discussion-disclaimer p {
+  margin: 0.15rem 0 0;
+}
+
+.quick-prompts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding-bottom: 0.25rem;
+}
+
+.quick-prompts-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.quick-prompts-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--aqa-ink-muted);
+}
+
+.quick-prompt-chip {
+  display: inline-flex;
+  align-items: center;
+  background: var(--aqa-pool-raised);
+  color: var(--aqa-ink);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-chip);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    transform 0.1s;
+}
+
+.quick-prompt-chip:hover {
+  background: var(--aqa-action-secondary-hover);
+  color: var(--aqa-ink);
+  border-color: var(--aqa-aqua);
+}
+
+.quick-prompt-chip:active {
+  transform: scale(0.97);
+}
+
+.quick-prompt-chip:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+}
+
+.followup-area textarea {
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--aqa-radius-input);
+  font-size: 0.9rem;
+  min-height: 8.5rem;
+  resize: vertical;
+  width: 100%;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.followup-area textarea:hover,
+.note-editor textarea:hover,
+.discussion-title-input:hover {
+  border-color: var(--aqa-aqua);
+}
+
+.followup-area textarea:focus {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 1px;
+  border-color: var(--aqa-aqua-bright);
+  box-shadow: 0 0 0 2px var(--aqa-state-info-bg);
+}
+
+.followup-area button {
+  align-self: flex-end;
+}
+
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.25rem 0;
+}
+
+.preview-message-card {
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-raised);
+}
+
+.preview-message-card > .preview-card-heading {
+  display: flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--aqa-pool-raised);
+  border-bottom: 1px solid var(--aqa-border);
+  border: 1px solid var(--aqa-border);
+  border-bottom: 0;
+  border-radius: calc(var(--aqa-radius-input) - 1px) calc(var(--aqa-radius-input) - 1px) 0 0;
+}
+
+.preview-message-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.preview-message-card > .preview-card-heading h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--aqa-ink);
+}
+
+.preview-controls {
+  display: grid;
+  grid-template-columns: minmax(13rem, 1.3fr) repeat(4, minmax(9rem, 1fr)) auto;
+  align-items: start;
+  gap: 0.875rem;
+}
+
+.preview-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.preview-control-group label {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  color: var(--aqa-ink-muted);
+  font-weight: 600;
+}
+
+.preview-control-group select {
+  width: 100%;
+  min-width: 0;
+}
+
+.preview-control-help {
+  color: var(--aqa-ink-subtle);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+@media (max-width: 64rem) {
+  .preview-controls {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
+}
+
+.preview-metrics {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.preview-metric {
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--aqa-radius-input);
+  font-size: 0.85rem;
+  color: var(--aqa-ink-muted);
+}
+
+.preview-metric strong {
+  color: var(--aqa-ink);
+}
+
+.preview-message-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.preview-prompt-text {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: 0 0 calc(var(--aqa-radius-input) - 1px) calc(var(--aqa-radius-input) - 1px);
+  background: var(--aqa-surface-recessed);
+  font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--aqa-ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-color: var(--aqa-water-line) transparent;
+  scrollbar-width: thin;
+}
+
+.preview-prompt-text::-webkit-scrollbar {
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+.preview-prompt-text::-webkit-scrollbar-track,
+.preview-prompt-text::-webkit-scrollbar-corner,
+.preview-prompt-text::-webkit-scrollbar-resizer {
+  background: transparent;
+}
+
+.preview-prompt-text::-webkit-scrollbar-thumb {
+  background: var(--aqa-water-line);
+  border: 0.2rem solid var(--aqa-surface-recessed);
+  border-radius: var(--aqa-radius-chip);
+}
+
+.preview-prompt-text::-webkit-scrollbar-thumb:hover {
+  background: var(--aqa-aqua);
+}
+
+/* Textareas retain native corners; only app scroll regions use this track. */
+html::-webkit-scrollbar,
+.discussion-messages::-webkit-scrollbar,
+.activity-log::-webkit-scrollbar,
+.material-content::-webkit-scrollbar,
+.nc-table-scroll::-webkit-scrollbar,
+.rm-table-scroll::-webkit-scrollbar,
+.pcm-table-scroll::-webkit-scrollbar {
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+html::-webkit-scrollbar-track,
+.activity-log::-webkit-scrollbar-track,
+.material-content::-webkit-scrollbar-track,
+.nc-table-scroll::-webkit-scrollbar-track,
+.rm-table-scroll::-webkit-scrollbar-track,
+.pcm-table-scroll::-webkit-scrollbar-track,
+html::-webkit-scrollbar-corner,
+.activity-log::-webkit-scrollbar-corner,
+.material-content::-webkit-scrollbar-corner,
+.nc-table-scroll::-webkit-scrollbar-corner,
+.rm-table-scroll::-webkit-scrollbar-corner,
+.pcm-table-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.discussion-messages::-webkit-scrollbar-track,
+.discussion-messages::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb,
+.discussion-messages::-webkit-scrollbar-thumb,
+.activity-log::-webkit-scrollbar-thumb,
+.material-content::-webkit-scrollbar-thumb,
+.nc-table-scroll::-webkit-scrollbar-thumb,
+.rm-table-scroll::-webkit-scrollbar-thumb,
+.pcm-table-scroll::-webkit-scrollbar-thumb {
+  background: var(--aqa-water-line);
+  border: 0.2rem solid var(--aqa-scrollbar-surface, var(--aqa-surface-recessed));
+  border-radius: var(--aqa-radius-chip);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+.discussion-messages::-webkit-scrollbar-thumb:hover,
+.activity-log::-webkit-scrollbar-thumb:hover,
+.material-content::-webkit-scrollbar-thumb:hover,
+.nc-table-scroll::-webkit-scrollbar-thumb:hover,
+.rm-table-scroll::-webkit-scrollbar-thumb:hover,
+.pcm-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--aqa-aqua);
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 0.5rem;
+  }
+
+  .app-main {
+    padding: 0.75rem;
+  }
+
+  .setup-row {
+    flex-direction: column;
+  }
+
+  .agent-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .setup-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.toolbar-actions {
+  display: flex;
+  /* Let the toolbar wrap onto multiple rows on narrow viewports so the text
+     labels stay visible at every width. */
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .app-brand-logo {
+    /* Spec: ~104-120px on narrow viewports, aspect ratio preserved. */
+    width: clamp(104px, 28vw, 120px);
+  }
+
+  .app-brand-tagline {
+    font-size: 0.7rem;
+  }
+
+  .navigation-row {
+    /* Keep tabs and toolbar on one wrapping row, no horizontal overflow. */
+    gap: 0.5rem;
+  }
+
+  .view-tabs,
+  .primary-navigation-main {
+    /* Keep every destination visible while making the dense navigation
+       predictable instead of producing uneven flex rows. */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex: 1 1 100%;
+    gap: 0.35rem;
+  }
+
+  .primary-navigation {
+    flex: 1 1 100%;
+  }
+
+  .view-tab {
+    width: 100%;
+    min-height: var(--aqa-control-height-touch);
+    justify-content: flex-start;
+    padding-inline: 0.75rem;
+  }
+
+  .configuration-menu {
+    min-width: 0;
+  }
+
+  .configuration-menu > .view-tab {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* At two navigation columns the decorative disclosure glyph would push
+     the already-labelled Configuration control outside a 320px viewport.
+     The settings icon and visible label remain the affordance; the menu
+     items themselves are unchanged. */
+  .configuration-menu-chevron.material-symbol {
+    display: none;
+  }
+
+  .configuration-menu-panel {
+    position: static;
+    min-width: 0;
+    width: 100%;
+    margin-top: 0.35rem;
+    box-shadow: none;
+  }
+
+  .ai-readiness-items {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-actions {
+    /* Toolbar wraps below the view tabs; keep generous touch padding. */
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  /* Give the longest localized navigation label a full row when two compact
+     columns no longer leave enough room for its icon and visible text. */
+  .primary-navigation-main > .configuration-menu {
+    grid-column: 1 / -1;
+  }
+}
+
+/* `rows` sets only the initial height, so preserve a usable resizable minimum. */
+.setup-material-input {
+  min-height: 14rem;
+  resize: vertical;
+}
+.setup-context-input {
+  min-height: 9rem;
+  resize: vertical;
+}
+.setup-interpretation-input {
+  min-height: 7rem;
+  resize: vertical;
+}
+.setup-procedure-input {
+  min-height: 5rem;
+  resize: vertical;
+}
+.setup-session-input {
+  min-height: 8.5rem;
+  resize: vertical;
+}
+
+@media (max-width: 1024px) {
+  .setup-material-input {
+    min-height: 10rem;
+  }
+  .setup-context-input {
+    min-height: 7rem;
+  }
+  .setup-interpretation-input {
+    min-height: 5rem;
+  }
+  .setup-procedure-input {
+    min-height: 4rem;
+  }
+  .setup-session-input {
+    min-height: 8.5rem;
+  }
+}
+
+.material-panel {
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  max-height: 35vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.material-panel > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--aqa-ink-muted);
+  font-size: 0.85rem;
+  user-select: none;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--aqa-border);
+  margin-bottom: 0.5rem;
+}
+
+.material-panel[open] > summary {
+  color: var(--aqa-ink);
+}
+
+.material-content {
+  margin: 0;
+  padding: 0.5rem 0.25rem;
+  min-height: 0;
+  background: var(--aqa-surface-code);
+  border-radius: var(--aqa-radius-input);
+  color: var(--aqa-ink-muted);
+  font-family: "JetBrains Mono", "Fira Code", "Menlo", "Consolas", monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  /* Numbered citation units use their own fixed gutter; unnumbered fallback
+     content retains its source whitespace via .material-raw-text. */
+  white-space: normal;
+  word-break: break-word;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 28vh;
+  counter-reset: material-line;
+}
+
+.material-content {
+  tab-size: 4;
+}
+
+.material-raw-text {
+  white-space: pre-wrap;
+}
+
+.material-numbered-line {
+  /* Segmentation-generated citation units stay visually grouped. The
+     separator belongs to .material-paragraph-break, which is emitted only
+     for a preserved source line or paragraph break. */
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: start;
+  margin: 0;
+  padding: 0.35rem 0.35rem 0.4rem;
+}
+
+.material-numbered-line--unlabelled {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.material-line-number {
+  color: var(--aqa-ink-subtle);
+  text-align: right;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.material-line-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.material-paragraph-break {
+  height: 0;
+  margin: 0.6rem 0.35rem;
+  border-top: 1px solid var(--aqa-material-divider);
+}
+
+/* Desktop uses a resizable material column; narrow viewports stack it and hide the separator. */
+.discussion-layout {
+  display: grid;
+  /* Default fallback for browsers that don't see the inline custom
+     property (initial mount, SSR). The inline style overrides this. */
+  grid-template-columns:
+    minmax(0, var(--material-pane-width, 22rem))
+    auto /* separator (hidden on mobile) */
+    minmax(0, 1fr);
+  column-gap: 0.75rem;
+  align-items: stretch;
+}
+
+.discussion-layout.is-material-collapsed {
+  /* When collapsed we swap the first column to the narrow rail. */
+  grid-template-columns:
+    minmax(0, var(--material-pane-width, 2.75rem))
+    minmax(0, 1fr);
+}
+
+/* The material sidebar (column 1) when expanded. */
+.discussion-layout > .material-panel {
+  grid-column: 1;
+  margin-bottom: 0;
+  align-self: stretch;
+  min-height: 0;
+  overflow: hidden;
+  /* Keep long material out of the grid row's intrinsic height. The flex child
+     below then owns its vertical scroll boundary. Grid stretching supplies
+     this pane's used height; a percentage height here would instead create a
+     cycle with this intrinsically sized row, letting the workspace outgrow it
+     and overlap the following Activity disclosure. */
+  contain: size;
+  max-height: none;
+}
+
+.discussion-layout > .material-panel > .material-content {
+  min-height: 0;
+  max-height: none;
+  flex: 1 1 auto;
+}
+
+/* The draggable vertical separator between material and workspace. */
+.material-separator {
+  grid-column: 2;
+  width: 8px;
+  margin: 0;
+  background: transparent;
+  cursor: col-resize;
+  align-self: stretch;
+  position: relative;
+  z-index: 1;
+  touch-action: none; /* Prevent the browser from scrolling while dragging. */
+}
+
+.material-separator::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--aqa-border);
+  border-radius: 2px;
+  transition:
+    background 0.15s,
+    width 0.15s;
+}
+
+.material-separator:hover::before,
+.material-separator:focus-visible::before,
+.material-separator:active::before {
+  width: 4px;
+  background: var(--aqa-aqua);
+}
+
+.material-separator:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 0;
+}
+
+.discussion-layout.is-material-collapsed > .material-separator {
+  display: none;
+}
+
+.discussion-workspace {
+  grid-column: 3;
+  min-width: 0; /* Prevent grid blowout from long pre/code in messages. */
+  min-height: 0;
+  /* The right column contains both the activity roster and the actual
+     response view. Let the column grow with both sections; only the
+     transcript itself owns a vertical scroll boundary for long rounds. */
+  max-height: none;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  container-type: inline-size;
+  container-name: discussion-workspace;
+}
+
+.discussion-layout.is-material-collapsed > .discussion-workspace {
+  grid-column: 2;
+}
+
+.discussion-layout.is-material-collapsed > .material-rail {
+  align-self: stretch;
+  max-height: none;
+}
+
+.material-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--aqa-border);
+  margin-bottom: 0.5rem;
+}
+
+.material-panel-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.material-panel-title {
+  font-weight: 600;
+  color: var(--aqa-ink);
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+.material-token-estimate {
+  color: var(--aqa-ink-subtle);
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+.material-collapse-btn {
+  background: transparent;
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink-muted);
+  border-radius: var(--aqa-radius-input);
+  width: 1.75rem;
+  height: 1.75rem;
+  line-height: 1;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.material-collapse-btn:hover {
+  background: var(--aqa-surface-raised);
+  color: var(--aqa-ink);
+}
+
+.material-rail {
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  padding: 0.5rem 0.25rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 0;
+  max-height: min(65vh, 42rem);
+  max-height: min(65dvh, 42rem);
+}
+
+.material-rail-toggle {
+  background: transparent;
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink-muted);
+  border-radius: var(--aqa-radius-input);
+  padding: 0.5rem 0.25rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  width: 100%;
+  font-weight: 600;
+}
+
+.material-rail-toggle:hover {
+  background: var(--aqa-surface-raised);
+  color: var(--aqa-ink);
+}
+
+.material-rail-toggle-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.05em;
+}
+
+.discussion-layout.is-mobile-stack {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.discussion-layout.is-mobile-stack > .material-separator {
+  display: none;
+}
+
+.discussion-layout.is-mobile-stack > .discussion-workspace {
+  grid-column: 1;
+}
+
+.discussion-layout.is-mobile-stack > .material-panel,
+.discussion-layout.is-mobile-stack > .material-rail {
+  grid-column: 1;
+  max-height: none;
+}
+
+.discussion-layout.is-mobile-stack > .material-panel {
+  /* The stacked pane owns its grid row. Size containment would erase its
+     intrinsic height and clip the header and scrollable material to a strip. */
+  contain: none;
+}
+
+.discussion-layout.is-mobile-stack > .material-panel > .material-content {
+  max-height: 50vh; /* Stacked: cap to a viewport-friendly height, still scrollable. */
+}
+
+.discussion-layout.is-mobile-stack .material-rail {
+  /* On mobile, show the rail as a single-row expand strip. */
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0.5rem 0.75rem;
+  gap: 0.5rem;
+}
+
+.discussion-layout.is-mobile-stack .material-rail-toggle {
+  flex-direction: row;
+  width: 100%;
+  min-height: 2.5rem; /* WCAG 2.5.5 touch target on narrow viewports. */
+  padding: 0.5rem 0.75rem;
+  justify-content: flex-start;
+}
+
+.discussion-layout.is-mobile-stack .material-rail-toggle-label {
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+
+.panel-header {
+  /* Shared page/section label: restrained, sentence case, and never the
+     page title. Title hierarchy remains in the dedicated title rules. */
+  font-family: var(--aqa-font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--aqa-ink-muted);
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--aqa-border);
+}
+
+.saved-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.saved-list li {
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border: 1px solid var(--aqa-border);
+  margin-bottom: 0.5rem;
+  transition: background 0.15s;
+}
+
+.saved-list li:hover {
+  background: var(--aqa-surface-raised);
+}
+
+.saved-title {
+  display: block;
+  font-weight: 600;
+  color: var(--aqa-ink);
+  font-size: 0.9rem;
+}
+
+.saved-meta {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--aqa-ink-subtle);
+  margin-top: 0.25rem;
+}
+
+.ds-button.note-add-btn {
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0;
+  margin-left: 0;
+  text-align: left;
+}
+
+.message-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.4rem;
+  padding-top: 0;
+}
+
+.message-footer-item {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--aqa-control-height);
+}
+
+.message-note-area {
+  width: 100%;
+}
+
+.message-footer .message-note {
+  margin: 0;
+  cursor: pointer;
+}
+
+.message-note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--aqa-aqua);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-raised);
+  color: var(--aqa-ink);
+  font-size: 0.85rem;
+  min-height: var(--aqa-control-height);
+  box-sizing: border-box;
+}
+
+.message-note-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  width: 100%;
+  line-height: 1.4;
+}
+
+.message-note-content .material-symbol {
+  color: var(--aqa-aqua);
+}
+
+.message-note:focus-visible {
+  outline: 2px solid var(--aqa-state-info);
+  outline-offset: 2px;
+}
+
+.message-note-context-state {
+  display: inline-flex;
+  margin-left: 0;
+}
+
+.message-context-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.16rem 0.45rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.message-context-badge--included {
+  color: var(--aqa-state-success);
+  background: var(--aqa-state-success-bg);
+}
+
+.message-context-badge--excluded {
+  color: var(--aqa-state-danger);
+  background: var(--aqa-state-danger-bg);
+}
+
+.message-bezugspunkt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  background: var(--aqa-aqua);
+  border: 1px solid var(--aqa-aqua-bright);
+  color: var(--aqa-action-primary-ink);
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: left;
+  box-shadow: var(--aqa-shadow-chip);
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.1s,
+    box-shadow 0.15s;
+}
+
+.message-bezugspunkt-btn:hover {
+  background: var(--aqa-aqua-bright);
+  border-color: var(--aqa-aqua-bright);
+  box-shadow: var(--aqa-shadow-chip-hover);
+}
+
+.message-bezugspunkt-btn:active {
+  transform: scale(0.97);
+}
+
+.message-bezugspunkt-btn .message-bezugspunkt-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.message-bezugspunkt-btn .message-bezugspunkt-label {
+  display: inline;
+}
+
+.note-editor {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  background: var(--aqa-surface-raised);
+  border-radius: var(--aqa-radius-input);
+  border: 1px solid var(--aqa-aqua);
+}
+
+.note-editor textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink);
+  border-radius: var(--aqa-radius-input);
+  padding: 0.6rem 0.75rem;
+  font-size: 0.85rem;
+  resize: vertical;
+  scrollbar-color: var(--aqa-water-line) transparent;
+  scrollbar-width: thin;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.note-editor textarea:focus {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 1px;
+  border-color: var(--aqa-aqua-bright);
+  box-shadow: 0 0 0 2px var(--aqa-state-info-bg);
+}
+
+.note-editor-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+}
+
+.note-editor-context {
+  margin-top: 0.55rem;
+}
+
+.note-context-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+}
+
+/* Only the current round is editable; older rounds retain their final visible state. */
+.message-context-row {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--aqa-control-height);
+  margin-top: 0;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-raised);
+  font-size: 0.8rem;
+}
+
+.message-context-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.message-context-checkbox input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+}
+
+.message-context-checkbox.is-excluded input[type="checkbox"] {
+  accent-color: var(--aqa-state-danger);
+}
+
+.message-context-state {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.message-context-state--included {
+  color: var(--aqa-state-success);
+}
+
+.message-context-state--excluded {
+  color: var(--aqa-state-danger);
+}
+
+/* Excluded messages get a readable border + background treatment,
+   not opacity-only (so the user can still read the text and so the
+   state survives exports and screenshots). */
+.discussion-message.is-excluded-from-context {
+  background: var(--aqa-state-danger-subtle-bg);
+  border-color: var(--aqa-state-danger);
+  border-style: dashed;
+  border-left-width: 3px;
+  border-left-color: var(--aqa-state-danger) !important;
+}
+
+.discussion-message.is-excluded-from-context.message-agent {
+  border-left-color: var(--aqa-state-danger) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discussion-message.is-excluded-from-context {
+    transition: none;
+    animation: none;
+  }
+}
+
+.inline-btn {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.8em;
+  padding: 2px 6px;
+}
+
+.template-placeholder {
+  color: var(--aqa-ink-subtle);
+}
+
+.discussion-message.is-focus-target {
+  background: var(--aqa-surface-raised);
+  box-shadow: 0 0 0 2px var(--aqa-state-warning);
+}
+
+.focus-segment-display {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: var(--aqa-surface-raised);
+  border: 1px solid var(--aqa-border);
+  border-radius: 0.25rem;
+}
+
+.focus-segment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--aqa-state-warning);
+  margin-bottom: 0.25rem;
+}
+
+.focus-segment-header button {
+  background: transparent;
+  border: none;
+  color: var(--aqa-ink-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.focus-segment-text {
+  font-size: 0.8rem;
+  color: var(--aqa-ink-muted);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.discussion-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--aqa-ink-subtle);
+}
+
+.error-banner {
+  margin-bottom: 0.5rem;
+}
+
+.error-banner button {
+  cursor: pointer;
+}
+
+.error-banner button:hover {
+  color: var(--aqa-ink);
+}
+
+.export-notice {
+  margin: 0 0 0.5rem;
+}
+
+.export-notice button {
+  cursor: pointer;
+}
+
+.export-notice button:hover,
+.export-notice button:focus-visible {
+  color: var(--aqa-ink);
+}
+
+.agent-controls select option[value=""] {
+  color: var(--aqa-ink-subtle);
+  font-style: italic;
+}
+
+.activity-log-panel {
+  /* Normal document flow: opening Activity pushes content down instead of
+     overlaying the status bar, discussion input, or setup actions. */
+  position: static;
+  background: var(--aqa-surface-recessed);
+  /* Match the standard outline used by the other app boxes. The Activity
+     disclosure stays distinct through its surface, not a special accent
+     line along the top edge. */
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  overflow: hidden;
+  font-family: var(--aqa-font-mono);
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin-top: 0.75rem;
+}
+
+.activity-log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  background: var(--aqa-surface-header);
+  color: var(--aqa-ink-muted);
+  font-weight: 600;
+}
+
+/* Toggle is a real <button> so screen readers expose it as a control and
+   keyboard focus lands here. Reset native button visuals, keep the existing
+   quiet aquatic drawer look, and let the label text do the work. */
+.activity-log-toggle {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+}
+
+.activity-log-toggle:hover {
+  color: var(--aqa-ink);
+}
+
+.activity-log-header-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.activity-log-header-icon {
+  font-size: 0.95rem;
+  color: var(--aqa-aqua);
+}
+
+.activity-log-clear-btn {
+  background: var(--aqa-pool-raised);
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink-muted);
+  padding: 0.18rem 0.55rem;
+  margin: 0.3rem 0.5rem 0.3rem 0;
+  border-radius: var(--aqa-radius-input);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-family: var(--aqa-font-ui);
+  align-self: center;
+  min-height: 1.5rem;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.activity-log-clear-btn:hover {
+  background: var(--aqa-action-secondary-hover);
+  color: var(--aqa-ink);
+  border-color: var(--aqa-aqua);
+}
+
+.activity-log {
+  overflow-y: auto;
+  max-height: min(30vh, 30rem);
+  padding: 0.25rem 0.75rem;
+}
+
+.activity-log-line {
+  padding: 0.15rem 0;
+  border-bottom: 1px solid var(--aqa-surface-raised);
+  color: var(--aqa-ink-muted);
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.activity-log-line-source {
+  display: inline-block;
+  min-width: 5.75rem;
+  margin-right: 0.45rem;
+  color: var(--aqa-aqua);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.activity-log-line-time {
+  display: inline-block;
+  margin-right: 0.45rem;
+  color: var(--aqa-ink-subtle);
+  font-family: var(--aqa-font-mono);
+  font-size: 0.68rem;
+}
+
+.activity-log-server .activity-log-line-source {
+  color: var(--aqa-state-info);
+}
+
+.activity-log-line.activity-log-error {
+  color: var(--aqa-state-danger);
+  background: var(--aqa-state-danger-soft-bg);
+  padding: 0.25rem 0.5rem;
+  margin: 0.1rem -0.5rem;
+}
+
+.activity-log-line.activity-log-error .activity-log-line-source,
+.activity-log-line.activity-log-error .activity-log-line-time {
+  color: var(--aqa-state-danger);
+}
+
+.activity-log-empty {
+  color: var(--aqa-ink-subtle);
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+.agent-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.agent-status-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0.55rem 0.6rem 0.55rem 0.75rem;
+  background: var(--aqa-surface-raised);
+  border-radius: var(--aqa-radius-input);
+  border-left: 3px solid var(--aqa-border);
+  font-size: 0.85rem;
+  color: var(--aqa-ink-muted);
+}
+
+.agent-status-summary,
+.synthesis-status-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.agent-status-row.is-queued {
+  opacity: 0.55;
+}
+
+.agent-status-row.is-writing {
+  background: var(--aqa-surface-recessed);
+  border-top: 1px solid var(--aqa-aqua);
+  border-right: 1px solid var(--aqa-aqua);
+  border-bottom: 1px solid var(--aqa-aqua);
+  border-left-color: currentColor;
+}
+
+.agent-status-row.is-error {
+  border-left-color: var(--aqa-state-danger) !important;
+}
+
+.agent-status-name {
+  font-weight: 500;
+  min-width: 11rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.agent-status-perspective-name {
+  color: var(--aqa-ink-muted);
+  font-weight: 400;
+}
+
+.agent-status-state {
+  font-size: 0.8rem;
+  color: var(--aqa-ink-muted);
+  font-style: italic;
+}
+
+.agent-status-state.is-error {
+  color: var(--aqa-state-danger);
+  font-style: normal;
+}
+
+.agent-status-row.is-inactive {
+  opacity: 0.62;
+}
+
+.agent-status-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.agent-status-active-toggle {
+  margin-right: 0.15rem;
+  font-size: 0.8rem;
+}
+
+.agent-status-active-toggle input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.synthesis-status-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0.55rem 0.6rem 0.55rem 0.75rem;
+  background: var(--aqa-surface-synthesis-status);
+  border: 1px solid var(--aqa-synthesis-status-border);
+  border-left: 3px solid var(--aqa-synthesis-accent);
+  border-radius: var(--aqa-radius-input);
+  font-size: 0.85rem;
+}
+
+.synthesis-status-row.is-waiting {
+  opacity: 0.58;
+}
+
+.synthesis-status-row.is-writing {
+  background: var(--aqa-surface-synthesis-writing);
+  border-color: var(--aqa-aqua);
+}
+
+.synthesis-status-row.is-error {
+  background: var(--aqa-state-danger-bg);
+  border-color: var(--aqa-state-danger);
+  border-left-color: var(--aqa-state-danger);
+}
+
+.synthesis-status-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 6rem;
+  font-weight: 600;
+  color: var(--aqa-synthesis-ink);
+}
+
+.synthesis-status-lifecycle {
+  color: var(--aqa-ink-muted);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.synthesis-status-lifecycle.is-complete {
+  color: var(--aqa-state-success);
+  font-style: normal;
+}
+
+.synthesis-status-lifecycle.is-writing {
+  color: var(--aqa-aqua-bright);
+}
+
+.synthesis-status-lifecycle.is-error {
+  color: var(--aqa-state-danger);
+  font-style: normal;
+}
+
+.synthesis-status-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.synthesis-status-toggle {
+  font-size: 0.8rem;
+}
+
+.synthesis-status-options-btn {
+  margin-left: 0;
+}
+
+.provider-history {
+  background: var(--aqa-surface-raised);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  margin-top: 0.25rem;
+  overflow: hidden;
+}
+
+.provider-history > summary {
+  align-items: center;
+  color: var(--aqa-aqua-bright);
+  cursor: pointer;
+  display: flex;
+  font-size: 0.85rem;
+  font-weight: 600;
+  gap: 0.45rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.provider-history > summary::before {
+  content: "›";
+  font-size: 1.1rem;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 0.15s ease;
+}
+
+.provider-history[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.provider-history > summary::marker,
+.provider-history > summary::-webkit-details-marker {
+  display: none;
+}
+
+.provider-history > p {
+  border-top: 1px solid var(--aqa-border);
+  color: var(--aqa-ink-muted);
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0.65rem 0.75rem 0.25rem;
+}
+
+.provider-history-table-wrap {
+  overflow-x: auto;
+  padding: 0.35rem 0.75rem 0.75rem;
+}
+
+.provider-history-table-wrap:focus-visible,
+.activity-log:focus-visible,
+.preview-prompt-text:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: -2px;
+}
+
+.provider-history table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  min-width: 36rem;
+  width: 100%;
+}
+
+.provider-history th,
+.provider-history td {
+  border-bottom: 1px solid var(--aqa-border);
+  padding: 0.45rem 0.55rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.provider-history thead th {
+  color: var(--aqa-ink-subtle);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.provider-history tbody th {
+  color: var(--aqa-ink);
+  font-weight: 600;
+  width: 4rem;
+}
+
+.activity-inline-config {
+  margin: 0.55rem 0 0;
+  padding: 0.65rem 0.15rem 0.1rem;
+  border: 0 !important;
+  border-top: 1px solid var(--aqa-border) !important;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.activity-inline-config .agent-config-summary {
+  align-items: flex-start;
+}
+
+@media (max-width: 640px) {
+  .agent-status-summary,
+  .synthesis-status-summary {
+    flex-wrap: wrap;
+  }
+
+  .agent-status-controls {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .synthesis-status-controls {
+    margin-left: auto;
+  }
+}
+
+.agent-waveform {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 14px;
+}
+
+.agent-waveform span {
+  display: inline-block;
+  width: 3px;
+  height: 100%;
+  background: currentColor;
+  border-radius: 1px;
+  animation: waveform-bounce 0.9s ease-in-out infinite;
+}
+
+.agent-waveform span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.agent-waveform span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes waveform-bounce {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-waveform span {
+    animation: none;
+  }
+}
+
+.discussion-message.is-just-arrived {
+  animation: message-reveal 0.5s ease-out;
+}
+
+@keyframes message-reveal {
+  from {
+    opacity: 0.6;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discussion-message.is-just-arrived {
+    animation: none;
+  }
+}
+
+.resize-handle {
+  width: 4px;
+  background: transparent;
+  cursor: col-resize;
+  flex-shrink: 0;
+  flex-grow: 0;
+  transition: background 0.15s;
+  align-self: stretch;
+}
+
+.resize-handle:hover,
+.resize-handle:active {
+  background: var(--aqa-aqua);
+}
+
+.streaming-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--aqa-ink-muted);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .streaming-caret {
+    animation: none;
+  }
+}
+
+/* Focus rings for interactive elements — aqua replaces royal blue as the
+   singular keyboard-focus accent. */
+button:focus-visible,
+.view-tab:focus-visible,
+.material-collapse-btn:focus-visible,
+.material-rail-toggle:focus-visible,
+.activity-log-clear-btn:focus-visible,
+.activity-log-toggle:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+}
+
+/* Navigation retains its established compact press feedback. */
+.view-tab:active {
+  transform: scale(0.96);
+}
+
+.modal-input {
+  margin-bottom: 1rem;
+}
+
+.confirm-dialog .ds-dialog-footer > button {
+  min-width: max-content;
+}
+
+.configuration-invalid-notice {
+  margin: 0.35rem 0 0;
+  color: var(--aqa-state-danger);
+  font-size: 0.85rem;
+}
+
+.activity-inline-config.is-invalid {
+  border-top-color: var(--aqa-state-warning) !important;
+}
+
+.configuration-recovery-guidance {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-left: 3px solid var(--aqa-state-warning);
+  background: var(--aqa-state-warning-bg);
+  color: var(--aqa-ink);
+}

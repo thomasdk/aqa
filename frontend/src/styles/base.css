@@ -1,0 +1,611 @@
+@font-face {
+  font-family: "Tomorrow";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/Tomorrow-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Tomorrow";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../assets/fonts/Tomorrow-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/MaterialSymbolsRounded-AQA.ttf") format("truetype");
+}
+
+/* Static filled companion for the active favorite state. The normal local
+   subset is generated at FILL=0, so CSS font-variation settings alone cannot
+   turn its outline-star glyph into a filled star. */
+@font-face {
+  font-family: "Material Symbols Rounded Filled";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/MaterialSymbolsRounded-AQA-Filled.ttf") format("truetype");
+}
+
+/* The appearance lifecycle resolves system preference before mounting React.
+   Keep palette values here; feature styles consume semantic tokens only. */
+:root {
+  color-scheme: dark;
+  --aqa-pool-deep: #071b2a;
+  --aqa-pool-base: #0b2638;
+  --aqa-pool-surface: #10364a;
+  --aqa-pool-raised: #1c5066;
+  --aqa-water-line: #6aa7b7;
+  --aqa-ink: #eafbfa;
+  --aqa-ink-muted: #c4e4e6;
+  --aqa-ink-subtle: #84b5c1;
+  --aqa-aqua: #52d6d0;
+  --aqa-aqua-bright: #8be9e5;
+  --aqa-sky: #70cde7;
+  --aqa-coral: #ffb3aa;
+  --aqa-favorite: #fbbf24;
+  --aqa-surface-canvas: var(--aqa-pool-deep);
+  --aqa-surface-raised: #122e42;
+  --aqa-surface-recessed: #0b2030;
+  --aqa-surface-header: #0e2436;
+  --aqa-border: var(--aqa-water-line);
+  --aqa-border-strong: var(--aqa-aqua);
+  --aqa-state-info: var(--aqa-sky);
+  --aqa-state-info-bg: rgba(82, 214, 208, 0.1);
+  --aqa-state-success: #34d399;
+  --aqa-state-success-bg: rgba(34, 197, 94, 0.12);
+  --aqa-state-warning: var(--aqa-coral);
+  --aqa-state-warning-bg: var(--aqa-state-danger-bg);
+  --aqa-state-danger: var(--aqa-coral);
+  --aqa-state-danger-bg: rgba(255, 179, 170, 0.08);
+  --aqa-action-primary: var(--aqa-aqua);
+  --aqa-action-primary-hover: var(--aqa-aqua-bright);
+  --aqa-action-primary-border: var(--aqa-aqua-bright);
+  --aqa-action-primary-ink: var(--aqa-pool-deep);
+  --aqa-action-secondary: var(--aqa-pool-raised);
+  --aqa-action-secondary-hover: #246278;
+  --aqa-surface-user: #143a47;
+  --aqa-surface-code: #07121e;
+  --aqa-markdown-heading: #f1f5f9;
+  --aqa-markdown-subheading: #cbd5e1;
+  --aqa-markdown-strong: #f8fafc;
+  --aqa-markdown-emphasis: #e2e8f0;
+  --aqa-synthesis-ink: #fde68a;
+  --aqa-synthesis-accent: #eab308;
+  --aqa-surface-synthesis: linear-gradient(135deg, #102f4a, #23374a 62%, #443a1b);
+  --aqa-surface-synthesis-config: linear-gradient(
+    135deg,
+    rgba(26, 67, 100, 0.72),
+    rgba(131, 93, 26, 0.2)
+  );
+  --aqa-surface-synthesis-status: linear-gradient(
+    90deg,
+    rgba(20, 58, 71, 0.88),
+    rgba(117, 85, 22, 0.24)
+  );
+  --aqa-surface-synthesis-writing: linear-gradient(
+    90deg,
+    rgba(11, 32, 48, 0.96),
+    rgba(20, 58, 71, 0.92)
+  );
+  --aqa-synthesis-config-border: rgba(234, 179, 8, 0.52);
+  --aqa-synthesis-border: rgba(234, 179, 8, 0.55);
+  --aqa-synthesis-status-border: rgba(234, 179, 8, 0.42);
+  --aqa-badge-success-ink: #6ee7b7;
+  --aqa-badge-success-bg: rgba(16, 185, 129, 0.12);
+  --aqa-badge-success-border: rgba(16, 185, 129, 0.35);
+  --aqa-badge-warning-ink: #fcd34d;
+  --aqa-badge-warning-bg: rgba(245, 158, 11, 0.12);
+  --aqa-badge-warning-border: rgba(245, 158, 11, 0.35);
+  --aqa-warning-border: rgba(245, 158, 11, 0.55);
+  --aqa-state-custom: #c4b5fd;
+  --aqa-badge-custom-bg: rgba(139, 92, 246, 0.12);
+  --aqa-badge-custom-border: rgba(139, 92, 246, 0.35);
+  --aqa-state-custom-bg: rgba(168, 85, 247, 0.12);
+  --aqa-state-custom-border: rgba(192, 132, 252, 0.45);
+  --aqa-state-danger-hover-bg: rgba(255, 125, 106, 0.22);
+  --aqa-state-danger-subtle-bg: rgba(255, 125, 106, 0.06);
+  --aqa-state-danger-soft-bg: rgba(255, 125, 106, 0.1);
+  --aqa-state-success-border: rgba(74, 222, 128, 0.4);
+  --aqa-state-warning-border: rgba(251, 191, 36, 0.45);
+  --aqa-selection-border: rgba(82, 214, 208, 0.35);
+  --aqa-notice-border: rgba(82, 214, 208, 0.45);
+  --aqa-material-divider: rgba(82, 214, 208, 0.2);
+  --aqa-shadow-menu: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.3);
+  --aqa-shadow-popover: 0 0.35rem 1rem rgba(0, 0, 0, 0.35);
+  --aqa-shadow-chip: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --aqa-shadow-chip-hover: 0 2px 4px rgba(0, 0, 0, 0.45);
+  --aqa-font-ui: "Inter", "Segoe UI", Roboto, sans-serif;
+  --aqa-font-display: "Tomorrow", "Inter", sans-serif;
+  --aqa-font-mono: "SF Mono", "Consolas", "Menlo", monospace;
+  --aqa-font-size-xs: 0.8rem;
+  --aqa-font-size-sm: 0.875rem;
+  --aqa-font-size-md: 1rem;
+  --aqa-font-size-lg: 1.125rem;
+  --aqa-font-size-xl: 1.5rem;
+  --aqa-line-height-tight: 1.2;
+  --aqa-line-height-control: normal;
+  --aqa-line-height-normal: 1.4;
+  --aqa-line-height-relaxed: 1.6;
+  --aqa-space-1: 0.25rem;
+  --aqa-space-2: 0.5rem;
+  --aqa-space-3: 0.75rem;
+  --aqa-space-4: 1rem;
+  --aqa-space-5: 1.25rem;
+  --aqa-space-6: 1.5rem;
+  --aqa-space-8: 2rem;
+  --aqa-icon-size-sm: 1rem;
+  --aqa-icon-size-md: 1.25rem;
+  --aqa-icon-size-lg: 1.5rem;
+  --aqa-border-width: 1px;
+  --aqa-radius-card: 0.5rem;
+  --aqa-radius-control: 0.375rem;
+  --aqa-radius-input: var(--aqa-radius-control);
+  --aqa-radius-chip: 999px;
+  --aqa-control-height-small: 2rem;
+  --aqa-control-height: 2.25rem;
+  --aqa-control-height-touch: 2.5rem;
+  --aqa-control-padding-block: 0.375rem;
+  --aqa-control-padding-inline: 0.75rem;
+  --aqa-focus-color: var(--aqa-aqua-bright);
+  --aqa-focus-width: 2px;
+  --aqa-focus-offset: 1px;
+  --aqa-focus-halo-width: 2px;
+  --aqa-disabled-opacity: 0.5;
+  --aqa-motion-instant: 0.1s;
+  --aqa-motion-fast: 0.15s;
+  --aqa-ease-standard: ease;
+  --aqa-shadow-control: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --aqa-overlay-scrim: rgba(0, 0, 0, 0.6);
+  --aqa-z-modal: 100;
+  --aqa-modal-width-sm: 25rem;
+  --aqa-modal-width-md: 32.5rem;
+  --aqa-row-height: 2.5rem;
+  --aqa-page-pad: 1.25rem;
+  --aqa-section-gap: 1rem;
+  font-family: var(--aqa-font-ui);
+  background-color: var(--aqa-surface-canvas);
+  color: var(--aqa-ink);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --aqa-pool-deep: #eaf5f7;
+  --aqa-pool-base: #e3f1f4;
+  --aqa-pool-surface: #dcedf0;
+  --aqa-pool-raised: #d6eaf0;
+  --aqa-water-line: #56818b;
+  --aqa-ink: #123849;
+  --aqa-ink-muted: #365666;
+  --aqa-ink-subtle: #496773;
+  --aqa-aqua: #006d73;
+  --aqa-aqua-bright: #00565e;
+  --aqa-sky: #096680;
+  --aqa-coral: #a52f28;
+  --aqa-favorite: #806000;
+  --aqa-surface-raised: #ffffff;
+  --aqa-surface-recessed: #f1f8f9;
+  --aqa-surface-header: #e0eff2;
+  --aqa-state-info-bg: rgba(0, 109, 115, 0.07);
+  --aqa-state-success: #126747;
+  --aqa-state-success-bg: rgba(18, 103, 71, 0.07);
+  --aqa-state-danger-bg: rgba(165, 47, 40, 0.06);
+  --aqa-action-primary-ink: #ffffff;
+  --aqa-shadow-control: 0 1px 3px rgba(7, 27, 42, 0.14);
+  --aqa-overlay-scrim: rgba(7, 27, 42, 0.4);
+  --aqa-surface-user: #e0f1f2;
+  --aqa-surface-code: #f1f8f9;
+  --aqa-action-secondary-hover: #c5e4e7;
+  --aqa-markdown-heading: #123849;
+  --aqa-markdown-subheading: #425f6c;
+  --aqa-markdown-strong: #123849;
+  --aqa-markdown-emphasis: #304f5f;
+  --aqa-synthesis-ink: #6b4b06;
+  --aqa-synthesis-accent: #806000;
+  --aqa-surface-synthesis: linear-gradient(135deg, #e3f2f5, #eef5ed 62%, #faf2da);
+  --aqa-surface-synthesis-config: linear-gradient(135deg, #e3f2f5, #faf2da);
+  --aqa-surface-synthesis-status: linear-gradient(90deg, #e0f1f2, #faf2da);
+  --aqa-surface-synthesis-writing: linear-gradient(90deg, #f1f8f9, #e0f1f2);
+  --aqa-synthesis-config-border: #947521;
+  --aqa-synthesis-border: #947521;
+  --aqa-synthesis-status-border: #947521;
+  --aqa-badge-success-ink: #126747;
+  --aqa-badge-success-bg: #e4f4ec;
+  --aqa-badge-success-border: #398066;
+  --aqa-badge-warning-ink: #704c05;
+  --aqa-badge-warning-bg: #faf1db;
+  --aqa-badge-warning-border: #987523;
+  --aqa-warning-border: #987523;
+  --aqa-state-custom: #63449b;
+  --aqa-badge-custom-bg: #f1ecfa;
+  --aqa-badge-custom-border: #8568ad;
+  --aqa-state-custom-bg: #f1ecfa;
+  --aqa-state-custom-border: #8568ad;
+  --aqa-state-danger-hover-bg: #f6dcd8;
+  --aqa-state-danger-subtle-bg: #fcf1ef;
+  --aqa-state-danger-soft-bg: #f9e8e4;
+  --aqa-state-success-border: #398066;
+  --aqa-state-warning-border: #987523;
+  --aqa-selection-border: #56818b;
+  --aqa-notice-border: #56818b;
+  --aqa-material-divider: #9bbec5;
+  --aqa-shadow-menu: 0 0.5rem 1.2rem rgba(7, 27, 42, 0.14);
+  --aqa-shadow-popover: 0 0.35rem 1rem rgba(7, 27, 42, 0.16);
+  --aqa-shadow-chip: 0 1px 2px rgba(7, 27, 42, 0.14);
+  --aqa-shadow-chip-hover: 0 2px 4px rgba(7, 27, 42, 0.2);
+}
+
+::selection {
+  background: var(--aqa-action-primary);
+  color: var(--aqa-action-primary-ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--aqa-surface-canvas);
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--aqa-ink-subtle);
+  opacity: 1;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.blocked-action-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  margin: 0;
+  color: var(--aqa-state-danger);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.blocked-action-hint > .material-symbol {
+  flex: 0 0 auto;
+  margin-top: 0.05rem;
+  font-size: 1rem;
+}
+
+#root
+  :is(
+    input:not([type]):not(.ds-control),
+    input[type="text"]:not(.ds-control),
+    input[type="number"]:not(.ds-control),
+    select:not(.ds-control),
+    textarea:not(.ds-control)
+  ) {
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-recessed);
+  background-clip: padding-box;
+  color: var(--aqa-ink);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+#root
+  :is(
+    input:not([type]):not(.ds-control),
+    input[type="text"]:not(.ds-control),
+    input[type="number"]:not(.ds-control),
+    select:not(.ds-control),
+    textarea:not(.ds-control)
+  ):hover:not(:disabled) {
+  border-color: var(--aqa-aqua);
+}
+
+#root
+  :is(
+    input:not([type]):not(.ds-control),
+    input[type="text"]:not(.ds-control),
+    input[type="number"]:not(.ds-control),
+    select:not(.ds-control),
+    textarea:not(.ds-control)
+  ):focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 1px;
+  border-color: var(--aqa-aqua-bright);
+  box-shadow: 0 0 0 2px var(--aqa-state-info-bg);
+}
+
+/* Scroll regions use one thin thumb and transparent track/corner treatment.
+   Scoping this to the app root covers both current and new scroll containers
+   without changing browser chrome outside the product. */
+html,
+#root,
+#root * {
+  scrollbar-color: var(--aqa-water-line) transparent;
+  scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar,
+#root::-webkit-scrollbar,
+#root ::-webkit-scrollbar {
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+html::-webkit-scrollbar-track,
+#root::-webkit-scrollbar-track,
+#root ::-webkit-scrollbar-track,
+html::-webkit-scrollbar-corner,
+#root::-webkit-scrollbar-corner,
+#root ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb,
+#root::-webkit-scrollbar-thumb,
+#root ::-webkit-scrollbar-thumb {
+  background: var(--aqa-water-line);
+  border: 0.2rem solid var(--aqa-scrollbar-surface, var(--aqa-surface-recessed));
+  border-radius: var(--aqa-radius-chip);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+#root::-webkit-scrollbar-thumb:hover,
+#root ::-webkit-scrollbar-thumb:hover {
+  background: var(--aqa-aqua);
+}
+
+html {
+  --aqa-scrollbar-surface: var(--aqa-surface-canvas);
+}
+
+:where(.nc-table-scroll, .rm-table-scroll, .pcm-table-scroll, .ds-editor-dialog-body) {
+  --aqa-scrollbar-surface: var(--aqa-surface-raised);
+}
+
+.material-content {
+  --aqa-scrollbar-surface: var(--aqa-surface-code);
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 1.25rem;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  flex: 1;
+  background: var(--aqa-surface-canvas);
+  border-radius: var(--aqa-radius-card);
+  padding: var(--aqa-page-pad);
+  border: 1px solid var(--aqa-border);
+}
+
+.view-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+}
+
+.app-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.app-brand-logo {
+  display: block;
+  width: clamp(132px, 12vw, 144px);
+  height: auto;
+}
+
+.app-brand-tagline {
+  color: var(--aqa-ink-subtle);
+  font-size: 0.7rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.navigation-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.view-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.primary-navigation {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.primary-navigation-main {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.configuration-menu {
+  position: relative;
+}
+
+.configuration-menu-chevron {
+  transition: transform 0.15s ease;
+}
+
+.configuration-menu.is-open .configuration-menu-chevron {
+  transform: rotate(180deg);
+}
+
+.configuration-menu.is-active:not(.is-open) > .view-tab {
+  background: var(--aqa-surface-recessed);
+  border-color: var(--aqa-aqua);
+  color: var(--aqa-ink);
+}
+
+.configuration-menu-panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 13rem;
+  padding: 0.35rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  background: var(--aqa-surface-raised);
+  box-shadow: var(--aqa-shadow-menu);
+}
+
+.configuration-menu-panel[hidden] {
+  display: none;
+}
+
+.configuration-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  border: 0;
+  border-radius: calc(var(--aqa-radius-input) - 0.1rem);
+  background: transparent;
+  color: var(--aqa-ink-muted);
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.configuration-menu-default {
+  margin-left: auto;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-chip);
+  color: var(--aqa-aqua);
+  padding: 0.05rem 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.configuration-menu-item:hover,
+.configuration-menu-item.is-active {
+  background: var(--aqa-surface-recessed);
+  color: var(--aqa-ink);
+}
+
+.configuration-menu-item:focus-visible {
+  background: var(--aqa-surface-recessed);
+  color: var(--aqa-ink);
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: -2px;
+}
+
+.view-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: var(--aqa-pool-raised);
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink-muted);
+  min-height: var(--aqa-control-height);
+  padding: var(--aqa-control-padding-block) var(--aqa-control-padding-inline);
+  border-radius: var(--aqa-radius-input);
+  cursor: pointer;
+  font-family: var(--aqa-font-display);
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1.2;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.1s;
+}
+
+.view-tab:hover {
+  background: var(--aqa-action-secondary-hover);
+  color: var(--aqa-ink);
+  border-color: var(--aqa-aqua);
+}
+
+.view-tab.is-active {
+  background: var(--aqa-aqua);
+  border-color: var(--aqa-aqua-bright);
+  color: var(--aqa-action-primary-ink);
+}
+
+.view-tab.is-active:hover {
+  background: var(--aqa-aqua-bright);
+}
+
+.system-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aqa-section-gap);
+}
+
+.system-page-header h1 {
+  margin: 0;
+  color: var(--aqa-ink);
+  font-family: var(--aqa-font-ui);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1.15;
+}
+
+.system-page-header p {
+  margin: 0.35rem 0 0;
+  color: var(--aqa-ink-muted);
+}

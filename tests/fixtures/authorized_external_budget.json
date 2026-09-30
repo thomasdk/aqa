@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "requests": 20,
+    "completion_requests": 20,
+    "elapsed_minutes": 90,
+    "input_tokens_per_completion": 32768,
+    "output_tokens_per_completion": null,
+    "concurrency": 1
+  }
+}

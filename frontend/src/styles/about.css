@@ -1,0 +1,176 @@
+.modal-content.about-dialog {
+  width: min(48rem, calc(100vw - 2rem));
+  max-width: 48rem;
+}
+
+.about-dialog > .ds-editor-dialog-body {
+  display: grid;
+  gap: var(--aqa-space-6);
+  min-width: 0;
+}
+
+.about-dialog > .ds-editor-dialog-body > * {
+  min-width: 0;
+}
+
+.about-dialog-brand {
+  align-items: center;
+  display: flex;
+  gap: var(--aqa-space-5);
+}
+
+.about-dialog-brand > div {
+  min-width: 0;
+}
+
+.about-dialog-logo {
+  flex: 0 0 auto;
+  width: 6.5rem;
+  border-radius: 1.15rem;
+}
+
+.about-dialog-name {
+  color: var(--aqa-ink);
+  font-size: var(--aqa-font-size-xl);
+  font-weight: 700;
+  margin: 0;
+}
+
+.about-dialog-subtitle {
+  margin: var(--aqa-space-1) 0 0;
+  color: var(--aqa-ink-muted);
+}
+
+.about-dialog-release-summary,
+.about-dialog-release-date {
+  color: var(--aqa-ink-muted);
+  margin: var(--aqa-space-1) 0 0;
+  overflow-wrap: anywhere;
+}
+
+.about-dialog h3 {
+  font-size: var(--aqa-font-size-md);
+  margin: 0 0 var(--aqa-space-2);
+}
+
+.about-dialog section p,
+.about-dialog ul {
+  margin: 0;
+}
+
+.about-dialog ul {
+  padding-inline-start: 1.25rem;
+}
+
+.about-dialog-columns {
+  display: grid;
+  gap: var(--aqa-space-5);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.about-dialog address {
+  font-style: normal;
+}
+
+.about-dialog address span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.release-links,
+.system-release-list {
+  display: grid;
+  gap: var(--aqa-space-3);
+  margin: 0;
+}
+
+.release-links > div,
+.system-release-list > div {
+  display: grid;
+  gap: var(--aqa-space-1);
+}
+
+.release-links dt,
+.system-release-list dt {
+  color: var(--aqa-ink);
+  font-weight: 600;
+}
+
+.release-links dd,
+.system-release-list dd {
+  margin: 0;
+}
+
+.release-links a,
+.system-release-list a {
+  color: var(--aqa-aqua-bright);
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.15em;
+}
+
+.release-link-unavailable {
+  color: var(--aqa-ink-muted);
+  font-weight: 600;
+}
+
+.release-link-explanation {
+  color: var(--aqa-ink-muted);
+  display: block;
+  font-size: var(--aqa-font-size-sm);
+  margin-top: var(--aqa-space-1);
+}
+
+.about-dialog-legal {
+  border-top: 1px solid var(--aqa-border);
+  color: var(--aqa-ink-muted);
+  font-size: var(--aqa-font-size-sm);
+  padding-top: var(--aqa-space-4);
+}
+
+.about-dialog-legal p {
+  margin: 0;
+}
+
+.system-release-information {
+  display: grid;
+  gap: var(--aqa-space-4);
+}
+
+.system-release-information h2 {
+  color: var(--aqa-ink);
+  font-size: var(--aqa-font-size-lg);
+  margin: 0;
+}
+
+.system-release-information > div:first-child > p {
+  color: var(--aqa-ink-muted);
+  margin: var(--aqa-space-1) 0 0;
+}
+
+.system-release-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.system-release-actions {
+  align-self: flex-start;
+}
+
+@media (max-width: 640px) {
+  .about-dialog-brand {
+    align-items: flex-start;
+  }
+
+  .about-dialog-logo {
+    width: 5rem;
+  }
+
+  .system-release-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-dialog-brand {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The loopback-served product UI may invoke only the native Markdown export, Local AI import-directory, managed-path reveal, menu-locale, appearance, round-notification commands, and generation sleep-inhibition command.",
+  "remote": {
+    "urls": [
+      "http://127.0.0.1:*"
+    ]
+  },
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "allow-save-markdown-export",
+    "allow-pick-local-ai-import-directory",
+    "allow-reveal-managed-path",
+    "allow-set-native-menu-locale",
+    "allow-set-native-appearance",
+    "allow-native-notification-permission-state",
+    "allow-request-native-notification-permission",
+    "allow-deliver-round-notification",
+    "allow-update-generation-sleep-inhibition"
+  ]
+}

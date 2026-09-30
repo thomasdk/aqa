@@ -1,0 +1,7 @@
+[[permission]]
+identifier = "allow-set-native-appearance"
+description = "Allows the loopback-served AQA UI to synchronize app-owned native appearance."
+
+[permission.commands]
+allow = ["set_native_appearance"]
+deny = []

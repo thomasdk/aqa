@@ -1,0 +1,880 @@
+.discussion-setup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aqa-section-gap);
+}
+
+.setup-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.setup-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--aqa-ink-muted);
+}
+
+.setup-label-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+}
+
+.setup-label-row .inline-btn {
+  margin-left: 0;
+}
+
+.setup-group small {
+  font-size: 0.75rem;
+  color: var(--aqa-ink-subtle);
+  margin-top: 0.15rem;
+}
+
+.setup-group .setup-field-error {
+  color: var(--aqa-state-danger);
+}
+
+/* Prepare fields use a self-contained scrollbar and resize corner so Chromium
+   cannot paint a native gray strip or overlap their rounded border. */
+.setup-group textarea {
+  resize: vertical;
+  scrollbar-color: var(--aqa-water-line) transparent;
+  scrollbar-width: thin;
+}
+
+/* All app textareas share the same browser chrome. Component rules may choose
+   their own height, but never a different scrollbar, resize corner, or focus
+   treatment. */
+.setup-group textarea,
+.followup-area textarea,
+.note-editor textarea,
+.rm-textarea {
+  resize: vertical;
+  scrollbar-color: var(--aqa-water-line) transparent;
+  scrollbar-width: thin;
+}
+
+.setup-group textarea::-webkit-scrollbar,
+.followup-area textarea::-webkit-scrollbar,
+.note-editor textarea::-webkit-scrollbar,
+.rm-textarea::-webkit-scrollbar {
+  width: 0.65rem;
+}
+
+.setup-group textarea::-webkit-scrollbar-track,
+.setup-group textarea::-webkit-scrollbar-corner,
+.followup-area textarea::-webkit-scrollbar-track,
+.followup-area textarea::-webkit-scrollbar-corner,
+.note-editor textarea::-webkit-scrollbar-track,
+.note-editor textarea::-webkit-scrollbar-corner,
+.rm-textarea::-webkit-scrollbar-track,
+.rm-textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.setup-group textarea::-webkit-scrollbar-thumb,
+.followup-area textarea::-webkit-scrollbar-thumb,
+.note-editor textarea::-webkit-scrollbar-thumb,
+.rm-textarea::-webkit-scrollbar-thumb {
+  background: var(--aqa-water-line);
+  border: 0.2rem solid var(--aqa-surface-recessed);
+  border-radius: var(--aqa-radius-chip);
+}
+
+.setup-group textarea::-webkit-scrollbar-thumb:hover,
+.followup-area textarea::-webkit-scrollbar-thumb:hover,
+.note-editor textarea::-webkit-scrollbar-thumb:hover,
+.rm-textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--aqa-aqua);
+}
+
+.setup-group textarea::-webkit-resizer,
+.followup-area textarea::-webkit-resizer,
+.note-editor textarea::-webkit-resizer,
+.rm-textarea::-webkit-resizer {
+  /* Keep the native corner transparent so it cannot paint over the focused
+     border at the lower-right corner of the field. */
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 2px,
+    var(--aqa-ink-subtle) 2px 3px,
+    transparent 3px 5px
+  );
+  background-position: right 0.2rem bottom 0.2rem;
+  background-repeat: no-repeat;
+  background-size: 0.4rem 0.4rem;
+}
+
+#root .setup-group input.setup-required-missing,
+#root .setup-group textarea.setup-required-missing {
+  border-color: var(--aqa-state-warning);
+  box-shadow: inset 0 0 0 1px var(--aqa-state-warning);
+}
+
+#root .setup-group input.setup-required-missing:focus,
+#root .setup-group textarea.setup-required-missing:focus {
+  outline: 2px solid var(--aqa-state-warning);
+  outline-offset: 2px;
+  border-color: var(--aqa-state-warning);
+  box-shadow: 0 0 0 2px var(--aqa-state-warning-bg);
+}
+
+.followup-area textarea:focus,
+.note-editor textarea:focus,
+.rm-textarea:focus {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 1px;
+  border-color: var(--aqa-aqua-bright);
+  box-shadow: 0 0 0 2px var(--aqa-state-info-bg);
+}
+
+.rm-textarea:hover {
+  border-color: var(--aqa-aqua);
+}
+
+.setup-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.setup-row .setup-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.agents-config {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Raised agent card. The inline `border-left` colour rail set by JSX
+   identifies the agent; everything else uses the shared surface tokens
+   so the only colour that changes per card is the rail. */
+.agent-config-row {
+  background: var(--aqa-surface-raised);
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  padding: 0.85rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.agent-config-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.agent-config-summary-copy {
+  display: flex;
+  flex: 1 1 12rem;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.agent-config-summary-copy label {
+  color: var(--aqa-ink-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.agent-config-summary-copy small {
+  color: var(--aqa-ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.agent-config-summary-copy select,
+.agent-controls select {
+  width: 100%;
+  background: var(--aqa-surface-recessed);
+  border: 1px solid var(--aqa-border);
+  color: var(--aqa-ink);
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--aqa-radius-input);
+  font-size: 0.85rem;
+}
+
+.agent-config-summary-copy select:focus,
+.agent-controls select:focus,
+.agent-config-options-toggle:focus-visible {
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+  border-color: var(--aqa-aqua-bright);
+  box-shadow: 0 0 0 2px var(--aqa-state-info-bg);
+}
+
+.agent-config-options-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: var(--aqa-control-height);
+  padding: var(--aqa-control-padding-block) var(--aqa-control-padding-inline);
+  flex: 0 0 auto;
+  border: 1px solid transparent;
+  border-radius: var(--aqa-radius-input);
+  background: transparent;
+  color: var(--aqa-aqua);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.agent-config-options-toggle:hover {
+  background: var(--aqa-state-info-bg);
+  color: var(--aqa-aqua-bright);
+}
+
+.agent-config-advanced {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 0.1rem;
+}
+
+.ai-readiness {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: var(--aqa-section-gap);
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  background: var(--aqa-surface-raised);
+}
+
+.ai-readiness-title-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ai-readiness-eyebrow,
+.ai-readiness h2 {
+  margin: 0;
+}
+
+.ai-readiness-eyebrow {
+  color: var(--aqa-ink-subtle);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ai-readiness h2 {
+  color: var(--aqa-ink);
+  font-size: 1rem;
+}
+
+.ai-readiness-items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ai-readiness-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-recessed);
+  padding: 0.3rem;
+}
+
+.ai-readiness-item.is-selected {
+  border-color: var(--aqa-aqua);
+  background: var(--aqa-pool-raised);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--aqa-aqua) 35%, transparent);
+}
+
+.ai-readiness-choice {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  flex: 1;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  border: 0;
+  border-radius: calc(var(--aqa-radius-input) - 0.15rem);
+  background: transparent;
+  color: var(--aqa-ink-muted);
+  padding: 0.25rem 0.35rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ai-readiness-choice:hover {
+  color: var(--aqa-ink);
+}
+
+.ai-readiness-choice:has(.choice-radio-input:focus-visible) {
+  color: var(--aqa-ink);
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+}
+
+.ai-readiness-choice-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.ai-readiness-choice strong {
+  color: var(--aqa-ink);
+  font-size: 0.85rem;
+}
+
+.ai-readiness-choice small {
+  color: var(--aqa-ink-muted);
+  font-size: 0.75rem;
+}
+
+.ai-readiness-configure {
+  flex: none;
+  padding-inline: 0.35rem;
+}
+
+.ai-readiness-source-chooser {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ai-readiness-bulk-default {
+  margin: 0;
+  color: var(--aqa-ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.ai-readiness-external-disclosure {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.resume-last-discussion {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+  margin-bottom: var(--aqa-section-gap);
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  background: var(--aqa-surface-raised);
+  color: var(--aqa-ink-muted);
+}
+
+.resume-last-discussion > .material-symbol {
+  color: var(--aqa-aqua);
+}
+
+.resume-last-discussion h2,
+.resume-last-discussion p {
+  margin: 0;
+}
+
+.resume-last-discussion h2 {
+  color: var(--aqa-ink);
+  font-size: 1rem;
+}
+
+.resume-last-discussion p {
+  margin-top: 0.15rem;
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.resume-last-discussion .ds-button {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.ai-readiness .setup-ai-notice {
+  margin: 0;
+}
+
+.prepare-flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aqa-section-gap);
+  min-width: 0;
+}
+
+.prepare-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-card);
+  background: var(--aqa-surface-raised);
+}
+
+.prepare-step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.prepare-step-header-copy {
+  min-width: 0;
+}
+
+.prepare-step-header .agent-config-options-toggle {
+  margin-left: auto;
+}
+
+.prepare-step-header h2,
+.prepare-step-header p {
+  margin: 0;
+}
+
+.prepare-step-header h2 {
+  color: var(--aqa-ink);
+  font-size: 1.05rem;
+}
+
+.prepare-step-header p {
+  margin-top: 0.15rem;
+  color: var(--aqa-ink-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.session-type-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.65rem;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.session-type-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-recessed);
+  color: var(--aqa-ink-muted);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.session-type-card > span:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.session-type-card strong {
+  color: var(--aqa-ink);
+  font-size: 0.9rem;
+}
+
+.session-type-card small {
+  color: var(--aqa-ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.session-type-card:hover,
+.session-type-card.is-selected {
+  border-color: var(--aqa-aqua);
+}
+
+.session-type-card:has(.choice-radio-input:focus-visible) {
+  border-color: var(--aqa-aqua-bright);
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+}
+
+.session-type-card.is-selected {
+  background: var(--aqa-pool-raised);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--aqa-aqua) 35%, transparent);
+}
+
+.prepare-optional-inputs,
+.prepare-optional-inputs-content,
+.discussion-customization {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.prepare-optional-inputs-content {
+  padding-top: 0.1rem;
+}
+
+.discussion-configuration-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-recessed);
+}
+
+.discussion-configuration-summary p {
+  margin: 0;
+}
+
+.discussion-configuration-perspectives {
+  margin-top: 0.2rem !important;
+  color: var(--aqa-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.discussion-configuration-facts {
+  margin-top: 0.15rem !important;
+  color: var(--aqa-ink-muted);
+  font-size: 0.8rem;
+}
+
+.discussion-customization {
+  padding-top: 0.2rem;
+}
+
+.discussion-customization > h3 {
+  margin: 0;
+  color: var(--aqa-ink-muted);
+  font-size: 0.9rem;
+}
+
+.discussion-mode-config {
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--aqa-border);
+}
+
+.prepare-start-area {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 1fr);
+  align-items: start;
+  gap: 1rem;
+}
+
+.prepare-start-action {
+  display: flex;
+  min-width: 0;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.prepare-start-action .blocked-action-hint {
+  max-width: min(100%, 32rem);
+}
+
+@media (max-width: 640px) {
+  .resume-last-discussion {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .resume-last-discussion .ds-button {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .agent-config-summary {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .agent-config-summary-copy {
+    flex: 0 1 auto;
+  }
+
+  .agent-config-summary .agent-config-options-toggle {
+    align-self: flex-end;
+  }
+
+  .discussion-configuration-summary,
+  .prepare-start-area {
+    align-items: stretch;
+  }
+
+  .prepare-start-area {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .discussion-configuration-summary {
+    display: flex;
+  }
+
+  .session-type-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .prepare-start-action {
+    align-items: stretch;
+  }
+}
+
+.view-page-header {
+  margin: 0 0 var(--aqa-section-gap);
+}
+
+.view-page-header h1 {
+  margin: 0;
+}
+
+.view-page-header p {
+  margin: 0.35rem 0 0;
+  color: var(--aqa-ink-muted);
+}
+
+.agent-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.agent-config-advanced > .agent-controls,
+.synthesis-config-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  column-gap: 0.75rem;
+  row-gap: 0.65rem;
+}
+
+.agent-config-advanced > .agent-controls > .checkbox,
+.agent-config-advanced > .agent-controls > .configuration-invalid-notice,
+.agent-config-advanced > .agent-controls > .agent-temperature-control,
+.synthesis-config-controls > .checkbox,
+.synthesis-config-controls > .configuration-invalid-notice,
+.synthesis-config-controls > .agent-temperature-control {
+  grid-column: 1 / -1;
+}
+
+.agent-controls label {
+  font-size: 0.8rem;
+  color: var(--aqa-ink-muted);
+  min-width: 5rem;
+}
+
+.agent-config-field,
+.agent-temperature-control {
+  display: flex;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.agent-config-field > span,
+.agent-temperature-control > label {
+  font-weight: 600;
+}
+
+.agent-temperature-control input[type="range"] {
+  width: 100%;
+}
+
+.agent-config-field select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .agent-config-advanced > .agent-controls,
+  .synthesis-config-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.agent-controls input[type="range"] {
+  flex: 1;
+  min-width: 100px;
+  /* Aqua replaces royal blue as the singular range-state accent. */
+  accent-color: var(--aqa-aqua);
+}
+
+/* The synthesis is configured independently from perspectives. Its warm
+   accent makes the post-round operation recognisable without treating it as
+   another role card. */
+.synthesis-config {
+  background: var(--aqa-surface-synthesis-config);
+  border: 1px solid var(--aqa-synthesis-config-border);
+  border-left: 3px solid var(--aqa-synthesis-accent);
+  border-radius: var(--aqa-radius-card);
+  padding: 0.85rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.synthesis-config-summary {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.synthesis-config-summary h2 {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--aqa-synthesis-ink);
+}
+
+.synthesis-config-summary p {
+  margin: 0.25rem 0 0;
+  color: var(--aqa-ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.synthesis-enabled-toggle {
+  flex: 0 0 auto;
+}
+
+.synthesis-config-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.synthesis-config-controls :disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--aqa-ink-muted);
+  user-select: none;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  /* Aqua replaces royal blue as the checkbox accent. */
+  accent-color: var(--aqa-aqua);
+  cursor: pointer;
+}
+
+.setup-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--aqa-border);
+}
+
+.setup-mode-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.45rem;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.setup-mode-toggle legend {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0.1rem;
+  color: var(--aqa-ink);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.setup-mode-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--aqa-border);
+  border-radius: var(--aqa-radius-input);
+  background: var(--aqa-surface-recessed);
+  color: var(--aqa-ink-muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.setup-mode-option:has(input:checked) {
+  color: var(--aqa-ink);
+  border-color: var(--aqa-aqua);
+  background: var(--aqa-pool-raised);
+}
+
+.setup-mode-option:has(.choice-radio-input:focus-visible) {
+  border-color: var(--aqa-aqua-bright);
+  outline: 2px solid var(--aqa-aqua-bright);
+  outline-offset: 2px;
+}
+
+.setup-mode-option:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.setup-help-text {
+  margin: 0;
+  width: 100%;
+  color: var(--aqa-ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  max-width: none;
+}
+
+.setup-material-guidance__content {
+  display: grid;
+  gap: var(--aqa-space-2);
+}
+
+.setup-material-guidance__content > span {
+  display: block;
+}

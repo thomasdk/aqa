@@ -1,0 +1,99 @@
+# ── Python ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ── Virtual Environments ────────────────────────────────────────────────
+.venv/
+.venv-packaging/
+venv/
+env/
+ENV/
+
+# ── IDE ─────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Secrets and local state — NEVER commit or bundle ────────────────────
+.env
+data/settings.json
+data/settings.json.backup
+.aqa/
+.aqa_workbench/
+User Data/
+
+# ── Logs ────────────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ── Saved conversations (user-private data) ─────────────────────────────
+conversations/
+
+# ── Models (large files) ────────────────────────────────────────────────
+models/
+
+# ── Data: keep data/prompts/ trackable (source assets). ─────────────────
+# Ignore only generated/local data files; never the whole data/ tree.
+data/*.db
+data/*.sqlite
+data/memlayer_*/
+memlayer_data/
+
+# ── Testing ─────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+frontend/coverage/
+tests/test_results/
+frontend/test-results/
+frontend/playwright-report/
+
+# ── OS ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.Rhistory
+
+# ── Build outputs ───────────────────────────────────────────────────────
+dist/
+frontend/dist/
+frontend/node_modules/
+node_modules/
+desktop/node_modules/
+desktop/src-tauri/target/
+desktop/src-tauri/resources/backend/
+desktop/src-tauri/resources/loading/
+desktop/src-tauri/gen/
+
+# ── Runtime artifacts (embedded Python runtimes fetched during packaging) ─
+/runtime/
+
+# ── PyInstaller directories ─────────────────────────────────────────────
+.pyinstaller/
+developer/pyinstaller/
+
+# ── Local agent and test artefacts ──────────────────────────────────────
+.hermes/
+MagicMock/
+
+# ── Temporary output ────────────────────────────────────────────────────
+*_output.txt
+outputs/

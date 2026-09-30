@@ -1,0 +1,29 @@
+{
+  "cargo_about": "cargo-about 0.9.2",
+  "inputs": {
+    "desktop/src-tauri/Cargo.lock": "2d8e150320ca227033826ef699582a8f2585b5ec5eb1eb10abd6bd2d058ec32f",
+    "desktop/src-tauri/Cargo.toml": "177639368995e0d58fd3ad94dfe617ab7809d8d8daab9eec6073909ef9a0194a",
+    "desktop/src-tauri/about.hbs": "86eff00af2d5573dd73b216d7e68bd78ff422e99187ac384cd192bf9bb9da9f9",
+    "desktop/src-tauri/about.toml": "ab6562b1504b3146b5c6687277857aa65d4a86eb4fb0de15bb8d0c446c02b831"
+  },
+  "outputs": {
+    "THIRD_PARTY_LICENSES/RUST_DEPENDENCIES.html": "305e2ee9071f15d5a707bc2df875e94d2da32891c12e53d30d97e81d3de5c0a8",
+    "THIRD_PARTY_LICENSES/RUST_STDLIB_APACHE-2.0.txt": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+    "THIRD_PARTY_LICENSES/RUST_STDLIB_COPYRIGHT.html": "0a65bb747c49c7bb816cbc7188319bd6e4e8d08091c1190b8a3c0971c47968ed",
+    "THIRD_PARTY_LICENSES/RUST_STDLIB_MIT.txt": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1"
+  },
+  "rustc": {
+    "commit_date": "2026-07-14",
+    "commit_hash": "8bab26f4f68e0e26f0bb7960be334d5b520ea452",
+    "llvm_version": "22.1.6",
+    "release": "1.97.1"
+  },
+  "schema": 1,
+  "sources": {
+    "apache_2_0": "https://github.com/rust-lang/rust/blob/8bab26f4f68e0e26f0bb7960be334d5b520ea452/LICENSE-APACHE",
+    "copyright": "https://github.com/rust-lang/rust/blob/8bab26f4f68e0e26f0bb7960be334d5b520ea452/COPYRIGHT",
+    "copyright_generator": "https://github.com/rust-lang/rust/tree/8bab26f4f68e0e26f0bb7960be334d5b520ea452/src/tools/generate-copyright",
+    "mit": "https://github.com/rust-lang/rust/blob/8bab26f4f68e0e26f0bb7960be334d5b520ea452/LICENSE-MIT",
+    "standard_library": "https://github.com/rust-lang/rust/tree/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library"
+  }
+}
