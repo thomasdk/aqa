@@ -1,6 +1,7 @@
 import { act, useState } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, it } from "vitest";
+import appIcon from "../assets/favicon.svg";
 import { setLocale } from "../i18n";
 import AboutDialog from "./AboutDialog";
 
@@ -54,8 +55,8 @@ describe("AboutDialog", () => {
     expect(dialog.textContent).toContain("Institute for Social Sciences");
     expect(dialog.textContent).toContain("Sociology and Empirical Social Research");
     expect(dialog.textContent).toContain("University of Stuttgart");
-    expect(dialog.querySelector<HTMLImageElement>(".about-dialog-logo")?.src).toContain(
-      "favicon.svg",
+    expect(dialog.querySelector<HTMLImageElement>(".about-dialog-logo")?.getAttribute("src")).toBe(
+      appIcon,
     );
     expect(dialog.textContent).toContain("Copyright © 2026 Thomas Krause");
     expect(dialog.textContent).toContain("MIT License");

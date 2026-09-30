@@ -40,6 +40,8 @@ date will be assigned only when that release is made.
   exposure of development files to other machines.
 - Update affected transitive API-generation, build and test dependencies within
   their compatible version ranges.
+- Upgrade the coordinated frontend development and test toolchain to fix the
+  remaining Vite, Vitest mocker/API, and esbuild development-server advisories.
 
 ### Technical Notes
 
