@@ -702,6 +702,7 @@ def test_apple_silicon_hardware_labels_and_sysctl_memory_fallback(
     monkeypatch.setattr(
         "src.local_ai.platform.os.sysconf",
         lambda _name: (_ for _ in ()).throw(OSError()),
+        raising=False,
     )
     monkeypatch.setattr(
         "src.local_ai.platform._sysctl_value",
@@ -764,6 +765,7 @@ def test_windows_ram_uses_native_memory_and_rounds_nominal_capacity(
     monkeypatch.setattr(
         "src.local_ai.platform.os.sysconf",
         lambda _name: (_ for _ in ()).throw(AssertionError("Windows must use native memory")),
+        raising=False,
     )
 
     from src.local_ai.platform import _detected_ram_gb
@@ -775,7 +777,9 @@ def test_linux_ram_falls_back_to_meminfo_when_sysconf_is_unavailable(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(
-        "src.local_ai.platform.os.sysconf", lambda _name: (_ for _ in ()).throw(OSError())
+        "src.local_ai.platform.os.sysconf",
+        lambda _name: (_ for _ in ()).throw(OSError()),
+        raising=False,
     )
     monkeypatch.setattr("src.local_ai.platform._linux_meminfo_total_bytes", lambda: 16 * 1024**3)
 

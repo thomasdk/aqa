@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import signal
+import shlex
 import socket
 import sys
 import threading
@@ -27,6 +27,16 @@ from src.local_ai.platform import HardwareProfile, RuntimeDevice, RuntimeProbe, 
 def _gguf(payload: bytes = b"fixture") -> bytes:
     """Small structurally identifiable GGUF used by manager-only tests."""
     return b"GGUF\x03\x00\x00\x00" + payload
+
+
+def _simulate_runtime_host(monkeypatch: pytest.MonkeyPatch, binary: Any) -> None:
+    """Keep runtime selection and manifest host checks on the same synthetic host."""
+    operating_system, architecture = binary.platform.split("-", 1)
+    system = {"macos": "Darwin", "windows": "Windows", "linux": "Linux"}[operating_system]
+    hardware = HardwareProfile(os=system, arch=architecture, gpu=binary.accelerator)
+    monkeypatch.setattr(manager_module.platform, "system", lambda: system)
+    monkeypatch.setattr(manager_module.platform, "machine", lambda: architecture)
+    monkeypatch.setattr(manager_module, "detect_hardware_profile", lambda: hardware)
 
 
 def test_import_publishes_only_a_complete_verified_model_pair(tmp_path: Path) -> None:
@@ -773,7 +783,10 @@ def test_linux_cuda_companions_are_verified_beside_the_server(tmp_path: Path) ->
     assert LocalAIManager._has_required_runtime_companions(binary, tmp_path) is False
 
 
-def test_accelerator_repair_selects_the_matching_cpu_runtime(tmp_path: Path) -> None:
+def test_accelerator_repair_selects_the_matching_cpu_runtime(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _simulate_runtime_host(monkeypatch, BINARY_SPECS["macos-arm64-metal"])
     manager = LocalAIManager(
         local_dir=tmp_path,
         binary_spec=BINARY_SPECS["macos-arm64-metal"],
@@ -1030,8 +1043,7 @@ def test_process_level_start_generation_stop_and_port_release(
 ) -> None:
     server = tmp_path / "llama-server"
     server.write_text(
-        f"""#!{sys.executable}
-import json
+        """import json
 import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -1051,22 +1063,21 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/health':
-            self._send({{'status': 'ok'}})
+            self._send({'status': 'ok'})
         elif self.path == '/v1/models':
-            self._send({{'data': [{{'id': 'fixture-model'}}]}})
+            self._send({'data': [{'id': 'fixture-model'}]})
         else:
             self.send_error(404)
 
     def do_POST(self):
         length = int(self.headers.get('Content-Length', '0'))
-        json.loads(self.rfile.read(length) or b'{{}}')
-        self._send({{'choices': [{{'text': 'pong'}}]}})
+        json.loads(self.rfile.read(length) or b'{}')
+        self._send({'choices': [{'text': 'pong'}]})
 
 HTTPServer(('127.0.0.1', port), Handler).serve_forever()
 """,
         encoding="utf-8",
     )
-    server.chmod(0o700)
     model = tmp_path / "main.gguf"
     draft = tmp_path / "draft.gguf"
     model.write_bytes(_gguf(b"main"))
@@ -1083,6 +1094,10 @@ HTTPServer(('127.0.0.1', port), Handler).serve_forever()
         health_interval=0.01,
     )
     monkeypatch.setattr(manager, "_validate_artifacts", lambda *_args, **_kwargs: None)
+    spawn = manager._spawn
+    # Windows cannot execute a shebang fixture; retain the real platform spawn
+    # and process lifecycle while launching the fixture through this interpreter.
+    monkeypatch.setattr(manager, "_spawn", lambda command: spawn([sys.executable, *command]))
 
     running = manager.start("gemma-4-e2b", mtp_enabled=False)
     assert running.state == "running"
@@ -1284,6 +1299,7 @@ def test_install_returns_job_id_and_supports_cancellation(
 def test_manifest_is_written_after_start_and_reloaded_on_new_manager(
     tmp_path: Path, fake_process, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    _simulate_runtime_host(monkeypatch, BINARY_SPECS["macos-arm64-metal"])
     _healthy_requests(monkeypatch)
     binary = tmp_path / "llama-server"
     model = tmp_path / "models" / "gemma-4-e2b" / "gemma-4-E2B-it-qat-UD-Q4_K_XL.gguf"
@@ -2162,15 +2178,13 @@ def _resolved_binary_for_test(
 ) -> Any:
     """Pin a deterministic BinarySpec and short-circuit the GitHub lookup.
 
-    ``_run_install_job`` calls ``latest_binary_for_profile`` to resolve the
-    current release from GitHub.  We do not want network here, so we
-    monkeypatch the helper to return the catalog's pinned b10976 spec for
-    the local platform.  ``select_binary`` is similarly replaced with a
-    deterministic stub so the manager never reads real hardware.
+    Installation and subsequent manifest restoration use the same synthetic
+    host. Release lookup returns the pinned catalog spec without network access.
     """
     from src.local_ai.catalog import BINARY_SPECS
 
     binary = BINARY_SPECS[profile]
+    _simulate_runtime_host(monkeypatch, binary)
     monkeypatch.setattr(manager_module, "binary_candidates", lambda _profile: (binary,))
     monkeypatch.setattr(manager_module, "latest_binary_for_profile", lambda _b: binary)
     return binary
@@ -2763,6 +2777,7 @@ def test_invalid_final_model_pair_is_replaced_by_a_same_attempt_redownload(
 def test_manifest_records_observed_sizes_and_restores_on_fresh_manager(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    _simulate_runtime_host(monkeypatch, BINARY_SPECS["macos-arm64-metal"])
     layout = _build_local_ai_dir(tmp_path)
     from src.local_ai.catalog import MODELS
 
@@ -4187,7 +4202,7 @@ def test_posix_marker_matching_requires_exact_executable_and_port_arguments(
         "run",
         lambda *_args, **_kwargs: SimpleNamespace(
             returncode=0,
-            stdout=f"{executable} --host 127.0.0.1 --port 8080\n",
+            stdout=f"{shlex.quote(executable)} --host 127.0.0.1 --port 8080\n",
         ),
     )
 
@@ -4218,7 +4233,7 @@ def test_posix_marker_matching_rejects_substring_impersonation(
         "run",
         lambda *_args, **_kwargs: SimpleNamespace(
             returncode=0,
-            stdout=command.format(executable=executable),
+            stdout=command.format(executable=shlex.quote(executable)),
         ),
     )
 
@@ -4248,6 +4263,9 @@ def test_stale_owned_posix_process_escalates_only_after_a_bounded_wait(
     manager = LocalAIManager(local_dir=tmp_path, port=0, cpu_threads=1)
     signals: list[int] = []
     liveness = iter([True, False])
+    # This simulated POSIX branch must not depend on Windows exposing SIGKILL.
+    posix_signals = SimpleNamespace(SIGTERM=15, SIGKILL=9)
+    monkeypatch.setattr(manager_module, "signal", posix_signals)
     monkeypatch.setattr(manager, "_pid_alive", lambda _pid: next(liveness))
     monkeypatch.setattr(manager_module.os, "kill", lambda _pid, signal: signals.append(signal))
     monkeypatch.setattr(manager_module, "STALE_PROCESS_TERM_TIMEOUT", 0.0)
@@ -4255,4 +4273,4 @@ def test_stale_owned_posix_process_escalates_only_after_a_bounded_wait(
 
     manager._terminate_stale_posix_process(1234)
 
-    assert signals == [signal.SIGTERM, signal.SIGKILL]
+    assert signals == [posix_signals.SIGTERM, posix_signals.SIGKILL]

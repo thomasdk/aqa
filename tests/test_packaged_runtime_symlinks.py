@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import errno
 import importlib.util
 import subprocess
 import sys
 from pathlib import Path
+
+import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 VERIFY_RUNTIME = PROJECT_ROOT / "packaging" / "runtime" / "verify_runtime.py"
@@ -23,7 +26,12 @@ def _runtime_with_links(tmp_path: Path) -> tuple[Path, Path, Path]:
     links.mkdir(parents=True)
     (source / "ddr").write_text("fake", encoding="utf-8")
     unsafe = links / "rebus3180"
-    unsafe.symlink_to("../d/ddr")
+    try:
+        unsafe.symlink_to("../d/ddr")
+    except OSError as exc:
+        if exc.errno in {errno.EPERM, errno.EACCES, errno.ENOSYS, errno.ENOTSUP}:
+            pytest.skip(f"Host cannot create test symlinks: {exc}")
+        raise
     safe = links / "regent200"
     safe.symlink_to("xterm")
     return runtime, unsafe, safe
@@ -34,7 +42,7 @@ def test_target_escape_classifier_distinguishes_safe_aliases() -> None:
         "../foo": True,
         "..": True,
         "foo/../../bar": True,
-        "/etc/passwd": True,
+        str(PROJECT_ROOT / "synthetic-absolute-target"): True,
         "xterm": False,
         "subdir/xterm": False,
         "foo/../bar": False,
@@ -47,7 +55,7 @@ def test_target_escape_classifier_distinguishes_safe_aliases() -> None:
 def test_find_unsafe_runtime_symlinks_preserves_safe_aliases(tmp_path: Path) -> None:
     runtime, unsafe, safe = _runtime_with_links(tmp_path)
     absolute = unsafe.parent / "absolute"
-    absolute.symlink_to("/etc/passwd")
+    absolute.symlink_to(tmp_path / "synthetic-absolute-target")
     found = verify_runtime.find_unsafe_runtime_symlinks(runtime)
     assert found == sorted([unsafe, absolute])
     assert safe not in found

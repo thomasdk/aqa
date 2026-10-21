@@ -4,7 +4,6 @@ Tests the discussion-related FastAPI endpoints using a mocked AppContext
 so no real LLM or storage is needed.
 """
 
-import asyncio
 import hashlib
 import json
 import queue
@@ -262,22 +261,22 @@ def test_continue_preflights_exact_resolved_rebind_before_mutation(client, mock_
     mock_context.discussion.continue_discussion.assert_not_called()
 
 
-def test_stream_disconnect_cancels_owned_generation():
+def test_stream_generator_close_cancels_owned_generation():
     disconnected = MagicMock()
-    response = _stream_response(
-        queue.Queue(),
-        threading.Event(),
-        [{"type": "discussion_started"}],
-        on_disconnect=disconnected,
-    )
-    iterator = response.body_iterator
-
-    async def consume_then_disconnect():
-        first = await anext(iterator)
-        await iterator.aclose()
-        return first
-
-    assert asyncio.run(consume_then_disconnect()).startswith("data: ")
+    # Exercise our generator's close contract directly. Closing Starlette's
+    # threadpool adapter leaves sync-generator finalization to worker cleanup.
+    with patch("src.service.routers.discussions.StreamingResponse") as response:
+        _stream_response(
+            queue.Queue(),
+            threading.Event(),
+            [{"type": "discussion_started"}],
+            on_disconnect=disconnected,
+        )
+    iterator = response.call_args.args[0]
+    assert next(iterator) == 'data: {"type": "discussion_started"}\n\n'
+    disconnected.assert_not_called()
+    iterator.close()
+    iterator.close()
     disconnected.assert_called_once_with()
 
 
@@ -3266,7 +3265,8 @@ class TestSessionReveal:
     def test_reveal_invokes_subprocess_with_arg_list(self, client, mock_context):
         from pathlib import Path
 
-        mock_context.discussion.session_path_for_reveal.return_value = Path("/tmp/a/abc.json")
+        session_path = Path("/tmp/a/abc.json")
+        mock_context.discussion.session_path_for_reveal.return_value = session_path
         with (
             override_context(app, mock_context),
             patch("src.service.routers.sessions.subprocess.run") as run_mock,
@@ -3284,7 +3284,7 @@ class TestSessionReveal:
         # macOS reveal = ['open', '-R', <path>]
         assert args[0][0] == "open"
         assert args[0][1] == "-R"
-        assert args[0][2] == "/tmp/a/abc.json"
+        assert args[0][2] == str(session_path)
         assert "timeout" in kwargs
 
     def test_reveal_response_does_not_leak_path(self, client, mock_context):

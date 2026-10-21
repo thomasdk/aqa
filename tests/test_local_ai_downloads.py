@@ -1844,6 +1844,7 @@ def _spy_on_parent_directory_fsync(
     return parent_open_paths, fsync_fd_calls
 
 
+@pytest.mark.skipif(os.name != "posix", reason="Requires real POSIX directory open and fsync")
 @pytest.mark.parametrize(
     "downloader",
     [

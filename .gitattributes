@@ -1,3 +1,6 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Preserve canonical source bytes on Windows as well as POSIX checkouts.
+* text=auto eol=lf
 THIRD_PARTY_LICENSES/** -text -whitespace
+
+# The tokenizer is integrity-checked against an upstream SHA-256 digest.
+data/tokenizers/*.tiktoken -text

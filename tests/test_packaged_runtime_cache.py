@@ -9,11 +9,16 @@ import sys
 import tarfile
 from pathlib import Path
 
+import pytest
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 VERIFY_RUNTIME = PROJECT_ROOT / "packaging" / "runtime" / "verify_runtime.py"
 FETCH_RUNTIMES = PROJECT_ROOT / "packaging" / "runtime" / "fetch_runtimes.sh"
 PLATFORM = "macos-arm64"
 EXPECTED_SHA = "804c86c8665b18eb0df5070a79d828229018d145baea38a71a5c74c03f9b11d4"
+requires_posix_shell = pytest.mark.skipif(
+    os.name != "posix", reason="Fetch integration uses POSIX Bash executable shims and host paths"
+)
 
 
 def _write_valid_runtime(root: Path, *, marker: str = "original") -> Path:
@@ -152,9 +157,10 @@ def test_validate_base_rejects_stale_or_incomplete_runtime(tmp_path: Path) -> No
         check=False,
     )
     assert incomplete.returncode == 1
-    assert "missing file lib/python3.13/os.py" in incomplete.stderr
+    assert f"missing file {Path('lib') / 'python3.13' / 'os.py'}" in incomplete.stderr
 
 
+@requires_posix_shell
 def test_fetch_reuses_valid_runtime_without_download(tmp_path: Path) -> None:
     runtime_root = tmp_path / "runtime"
     _write_valid_runtime(runtime_root)
@@ -167,6 +173,7 @@ def test_fetch_reuses_valid_runtime_without_download(tmp_path: Path) -> None:
     assert not result.fetch_log.exists()  # type: ignore[attr-defined]
 
 
+@requires_posix_shell
 def test_fetch_replaces_invalid_runtime_and_preserves_old_runtime_on_bad_archive(
     tmp_path: Path,
 ) -> None:
@@ -192,6 +199,7 @@ def test_fetch_replaces_invalid_runtime_and_preserves_old_runtime_on_bad_archive
     assert (runtime_root / PLATFORM / "bin" / "python3").read_text(encoding="utf-8") == original
 
 
+@requires_posix_shell
 def test_fetch_force_refreshes_valid_runtime(tmp_path: Path) -> None:
     runtime_root = tmp_path / "runtime"
     _write_valid_runtime(runtime_root)
