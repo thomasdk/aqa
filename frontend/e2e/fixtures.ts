@@ -294,6 +294,14 @@ export const test = base.extend<ResponsiveFixtures>({
   mockedPage: async ({ page }, use) => {
     await installApiMocks(page);
     await page.addInitScript(() => {
+      // Match visual baselines without depending on fonts installed on the runner.
+      const inter = new FontFace(
+        "Inter",
+        'url("/node_modules/@fontsource-variable/inter/files/inter-latin-standard-normal.woff2")',
+        { weight: "100 900" },
+      );
+      document.fonts.add(inter);
+      void inter.load();
       if (!window.sessionStorage.getItem("aqa.e2e.initialized")) {
         window.localStorage.clear();
         window.sessionStorage.setItem("aqa.e2e.initialized", "1");

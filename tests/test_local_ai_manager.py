@@ -450,7 +450,9 @@ def test_start_accepts_any_integer_within_model_bounds(
     manager: LocalAIManager, monkeypatch: pytest.MonkeyPatch, context_tokens: int
 ) -> None:
     _healthy_requests(monkeypatch)
-    assert manager.start("gemma-4-e2b", context_tokens=context_tokens).context_tokens == context_tokens
+    assert (
+        manager.start("gemma-4-e2b", context_tokens=context_tokens).context_tokens == context_tokens
+    )
 
 
 def test_twelve_b_allows_its_documented_maximum(manager: LocalAIManager) -> None:

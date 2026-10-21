@@ -72,6 +72,8 @@ In System, choose the interface language and appearance, manage discussion-round
 
 ## Install AQA
 
+Download installers and `SHA256SUMS` from the [official release page](https://github.com/thomasdk/aqa/releases/tag/v1.0.0).
+
 Choose the package that matches both the operating system and processor:
 
 | Platform | Package |
@@ -95,8 +97,8 @@ Apple describes this app-specific procedure in [Safely open apps on your Mac](ht
 ### Windows
 
 1. Run the x64 or ARM64 installer that matches the device.
-2. A browser may first warn about downloading an uncommon executable. Obtain the installer from AQA’s official release page. If the browser blocks that download, use another browser such as Firefox. This browser warning is separate from the SmartScreen dialog shown when an app starts.
-3. For the ordinary **Windows protected your PC** warning, select **More info → Run anyway** only when the package came from AQA's official release page and its checksum matches.
+2. A browser may first warn about downloading an uncommon executable. Obtain the installer from AQA’s [official release page](https://github.com/thomasdk/aqa/releases/tag/v1.0.0). If the browser blocks that download, use another browser such as Firefox. This browser warning is separate from the SmartScreen dialog shown when an app starts.
+3. For the ordinary **Windows protected your PC** warning, select **More info → Run anyway** only when the package came from AQA's [official release page](https://github.com/thomasdk/aqa/releases/tag/v1.0.0) and its checksum matches.
 
 Microsoft documents [reputation-based protection and SmartScreen](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation). [Smart App Control](https://support.microsoft.com/en-us/windows/security/threat-malware-protection/smart-app-control-frequently-asked-questions) and [organization policies](https://learn.microsoft.com/en-us/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/available-settings) may prevent a per-app exception.
 

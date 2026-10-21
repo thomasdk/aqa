@@ -83,6 +83,8 @@ npm exec playwright install chromium
 npm run test:responsive
 ```
 
+The mocked browser fixtures load the pinned Inter development font so visual comparisons do not depend on fonts installed on the test machine. This fixture font is not imported by the shipped application.
+
 Tests marked `integration` require an explicitly configured, approved OpenAI-compatible service and do not run in normal CI. Never place credentials, private endpoints, or research material in commands, fixtures, logs, issues, or pull requests. Use only synthetic material and follow the test's documented environment variables.
 
 The checked-in Rust notices record the exact toolchain in `THIRD_PARTY_LICENSES/RUST_TOOLCHAIN.json` (currently Rust 1.97.1). Use that toolchain with its `rust-docs` component: packaging checks the compiler identity and standard-library copyright. If intentionally changing the toolchain, regenerate the notices with `python packaging/licensing/generate_rust_notices.py` and review the changes; generation also requires `cargo-about` 0.9.2.

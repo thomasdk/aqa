@@ -205,8 +205,12 @@ class TestPreviewEndpointSessionType:
             "the discussion. Consider them when developing your response, distinguishing them "
             "from evidence in the source material."
         ) in body["system_prompt"]
-        assert body["system_prompt"].index("=== GRUNDHALTUNG ===") < body["system_prompt"].index("=== RESEARCHER NOTES ===")
-        assert body["system_prompt"].index("=== RESEARCHER NOTES ===") < body["system_prompt"].index("=== YOUR PERSPECTIVE ===")
+        assert body["system_prompt"].index("=== GRUNDHALTUNG ===") < body["system_prompt"].index(
+            "=== RESEARCHER NOTES ==="
+        )
+        assert body["system_prompt"].index("=== RESEARCHER NOTES ===") < body[
+            "system_prompt"
+        ].index("=== YOUR PERSPECTIVE ===")
         assert body["system_prompt"].endswith(
             "=== FINAL RESPONSE LANGUAGE REQUIREMENT ===\n"
             "Write all prose in [Preview: selected response language]. Before returning the "

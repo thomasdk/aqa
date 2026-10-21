@@ -3481,9 +3481,7 @@ QUESTION:
         active_agents = [
             (index, agent) for index, agent in enumerate(self._current_agents) if agent.is_active
         ]
-        user_prompt = build_preview_user_prompt(
-            material_context, discussion_state=self.state
-        )
+        user_prompt = build_preview_user_prompt(material_context, discussion_state=self.state)
         messages: list[tuple[str, str, str]] = []
         for position, (index, agent) in enumerate(active_agents):
             system_prompt = self.build_system_prompt(
@@ -3497,7 +3495,11 @@ QUESTION:
             )
             if system_prompt:
                 messages.append(
-                    (f"Perspective {agent.perspective_number or position + 1}", system_prompt, user_prompt)
+                    (
+                        f"Perspective {agent.perspective_number or position + 1}",
+                        system_prompt,
+                        user_prompt,
+                    )
                 )
         if (
             self._current_stored.prompt_snapshot.synthesis_used
